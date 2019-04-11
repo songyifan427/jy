@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <title>Login</title>
+</head>
+<body>
+    <div id="background">
+        <div class="signin">
+            <div class="loginbox">
+                <div class="log">
+                    <img src="../static/img/login.png" style="width: 156px;height: 246px;">
+                    <div class="loginner">
+                        <div class="logtitle">用户登录</div>
+                        <form action="/checklogin" method="post">
+                            <div class="grop">
+                                <div class="lab">工号:</div>
+                                <input type="text" name="userid" id="userid">
+                            </div>
+                            <div class="grop">
+                                <div class="lab">密码:</div>
+                                <input type="password" name="password" id="password">
+                            </div>
+                            <div class="grop">
+                                <div class="lab" id="codes"><img src="/codeimg" alt="" width="120" height="40" style="cursor: pointer"></div>
+                                <input type="text" name="code" id="code">
+                            </div>
+                            <div style="width:90px;margin: auto">
+                                <input type="submit" value="登录" style="width: 90px;margin: auto;color: #333333;font-size: 18px;font-weight: 400;text-align: center;">
+                                {% if data %}
+                                    <p style="color: #a15e09">{{data.tips}}</p>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    document.querySelector("#codes").onclick=function(){window.location.href = '/login';}
+</script>
