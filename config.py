@@ -1,9 +1,11 @@
 #本机字体样式ttf文件绝对路径
-ttfurl='C:\WINDOWS\Fonts\ARVO-REGULAR.TTF'
+ttfurl='.\Arvo-Regular.ttf'
 #session_key
 secret_key='123456'
 #mysql_host
 mysqlhost="localhost"
+#mysql_port
+mysqlport=3306
 #mysql_user
 user='root'
 #mysql_password
