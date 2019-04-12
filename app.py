@@ -1,3 +1,4 @@
+# encoding: utf-8
 from flask import Flask,render_template,request,redirect,make_response,session
 import pymysql
 from code import code
