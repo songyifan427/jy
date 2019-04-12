@@ -1,3 +1,4 @@
+# encoding: utf-8
 #本机字体样式ttf文件绝对路径
 ttfurl='.\Arvo-Regular.ttf'
 #session_key
