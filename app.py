@@ -169,21 +169,35 @@ def uploadSalaryForm():
         cur.close()
     return "success"
 
-# 查看已录入合同
+# 查看已录入合同入口
 @app.route('/history')
 def history():
     create_userid = session.get("userid");
     db = connect()
     cur = db.cursor()
-    cur.execute("select 合同编号,客户名称,业务类型,产品名称,负责销售,销售所属分公司,首次启动人数,项目启动日期,客服经理,客户代理人 from mainform where create_userid = %s and state = 1",(create_userid))
-    mainform = cur.fetchall()
-    cur.execute("select 合同编号,工资报税地,工资到款日,工资发放日,工资发放类型,薪税需求备注 from salaryform where create_userid = %s and state = 1", (create_userid))
-    salaryform = cur.fetchall()
-    cur.execute("select 合同编号,社保缴纳城市,不收取残保金城市,社保到款日,是否涉及异地参保 from securityform where create_userid = %s and state = 1", (create_userid))
-    securityform = cur.fetchall()
-    db.close()
-    cur.close()
-    return render_template('history.html',mainform=mainform,salaryform=salaryform,securityform=securityform)
-
+    cur.execute("select id,合同编号,客户名称,业务类型,产品名称 from mainform where create_userid = %s and state = 1",(create_userid))
+    result = cur.fetchall()
+    if result:
+        return render_template('history.html',result=result)
+    else:
+        return render_template('history.html')
+# 查看已录入合同
+@app.route('/historydetail/<cid>')
+def historydetail(cid):
+    if cid:
+        create_userid = session.get("userid")
+        db = connect()
+        cur = db.cursor()
+        cur.execute("select * from mainform where 合同编号 = %s and create_userid = %s and state = 1",(cid,create_userid))
+        mainform = cur.fetchall()
+        cur.execute("select * from salaryform where 合同编号 = %s and create_userid = %s and state = 1", (cid,create_userid))
+        salaryform = cur.fetchall()
+        cur.execute("select * from securityform where 合同编号 = %s and create_userid = %s and state = 1", (cid,create_userid))
+        securityform = cur.fetchall()
+        db.close()
+        cur.close()
+        return render_template('historydetail.html',mainform=mainform,salaryform=salaryform,securityform=securityform)
+    else:
+        return redirect("/history")
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
