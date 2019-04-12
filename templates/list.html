@@ -23,18 +23,8 @@
             <tr>
                 <td>合同编号</td>
                 <td><input type="text" class="wordNotEmpty" id="contractid0" name="合同编号" maxlength="64"></td>
-                <td>商机编号</td>
-                <td><input type="text" class="wordNotEmpty" name="商机编号" maxlength="64"></td>
-            </tr>
-            <tr>
                 <td>客户名称</td>
-                <td colspan="3"><input type="text" style="width: 90%" class="wordNotEmpty" name="客户名称" maxlength="255"></td>
-            </tr>
-            <tr>
-                <td>是否战略客户</td>
-                <td><input type="text" class="wordNotEmpty" name="是否战略客户" maxlength="64"></td>
-                <td>是否一般纳税人</td>
-                <td><input type="text" class="wordNotEmpty" name="是否一般纳税人" maxlength="64"></td>
+                <td><input type="text" class="wordNotEmpty" name="客户名称" maxlength="255"></td>
             </tr>
             <tr>
                 <td>业务类型</td>
@@ -44,12 +34,7 @@
             </tr>
             <tr hidden>
                 <td colspan="2"><input type="radio" name="业务类型" value="{{ typeName }}" maxlength="64" checked></td>
-                <td colspan="2"><input type="radio" name="产品名称" value="{{ clsName }}" maxlength="64" checked></td></tr>
-            <tr>
-                <td>负责销售</td>
-                <td><input type="text" class="wordNotEmpty" name="负责销售" maxlength="64"></td>
-                <td>销售所属分公司</td>
-                <td><input type="text" class="wordNotEmpty" name="销售所属分公司" maxlength="64"></td>
+                <td colspan="2"><input type="radio" name="产品名称" value="{{ clsName }}" maxlength="64" checked></td>
             </tr>
             <tr>
                 <td>首次启动人数</td>
@@ -60,8 +45,7 @@
             <tr>
                 <td>客服经理</td>
                 <td><input type="text"class="wordNotEmpty" name="客服经理" maxlength="64"></td>
-                <td>客户代理人</td>
-                <td><input type="text"class="wordNotEmpty" name="客户代理人" maxlength="64"></td>
+                <td colspan="2"></td>
             </tr>
             <tr>
                 <td>账单出具日</td>
@@ -101,36 +85,46 @@
             <tr>
                 <td>是否涉及宣讲</td>
                 <td>
-                    <select name="是否涉及宣讲">
-                        <option value="否">否</option><option value="是">是</option>
+                    <select name="是否涉及宣讲" class="notEmpty">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
                     </select>
                 </td>
                 <td>是否涉及社保公积金转移</td>
                 <td>
-                    <select name="是否涉及社保公积金转移">
-                        <option value="否">否</option><option value="是">是</option>
+                    <select name="是否涉及社保公积金转移" class="notEmpty">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>是否涉及退休办理</td>
                 <td>
-                    <select name="是否涉及退休办理">
-                        <option value="否">否</option><option value="是">是</option>
+                    <select name="是否涉及退休办理" class="notEmpty">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
                     </select>
                 </td>
                 <td>是否涉及三期人员</td>
                 <td>
-                    <select name="是否涉及三期人员">
-                        <option value="否">否</option><option value="是">是</option>
+                    <select name="是否涉及三期人员" class="notEmpty">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>是否涉及贷款人员</td>
                 <td>
-                    <select name="是否涉及贷款人员">
-                        <option value="否">否</option><option value="是">是</option>
+                    <select name="是否涉及贷款人员" class="notEmpty">
+                        <option value="">请选择</option>
+                        <option value="是">是</option>
+                        <option value="否">否</option>
                     </select>
                 </td>
                 <td>渠道名称(选填)</td>
@@ -150,7 +144,7 @@
             </tr>
             <tr>
                 <td>报销服务费比例(选填)&nbsp(%)</td>
-                <td><input type="text"class="number" name="报销服务费比例" maxlength="64"></td>
+                <td><input type="text" class="number" name="报销服务费比例" maxlength="64"></td>
                 <td colspan="2"></td>
             </tr>
         </table>
@@ -1546,19 +1540,30 @@
             </tr>
             <tr>
                 <th>社保缴纳城市</th>
-                <th>不收取残保金城市</th>
+                <th>减免残保金城市(选填)</th>
                 <th>社保到款日</th>
                 <th>是否涉及异地参保</th>
             </tr>
             <tr>
                 <td><input type="text" class="wordNotEmpty" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255"></td>
-                <td><input type="text" class="wordNotEmpty" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="不收取残保金城市" maxlength="255"></td>
-                <td><input type="date" class="notEmpty" name="社保到款日"></td>
+                <td><input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="减免残保金城市" maxlength="255"></td>
                 <td>
-                    <label class="radio inline">
+                    <select name="社保到款日">
+                        <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
+                        <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
+                        <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                        <option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option>
+                        <option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
+                        <option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option>
+                        <option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option>
+                        <option value="29">29</option><option value="30">30</option><option value="31">31</option>
+                    </select>
+                </td>
+                <td>
+                    <label class="radio inline securityFormRadio">
                         <input type="radio" value="是" name="是否涉及异地参保">是
                     </label>
-                    <label class="radio inline">
+                    <label class="radio inline securityFormRadio">
                         <input type="radio" value="否" name="是否涉及异地参保" checked>否
                     </label>
                 </td>
@@ -1569,14 +1574,25 @@
             </tr>
             <tr>
                 <th>社保缴纳城市(选填)</th>
-                <th>不收取残保金城市(选填)</th>
+                <th>减免残保金城市(选填)</th>
                 <th>社保到款日(选填)</th>
                 <th>是否涉及异地参保(选填)</th>
             </tr>
             <tr>
                 <td><input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255"></td>
-                <td><input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="不收取残保金城市" maxlength="255"></td>
-                <td><input type="date" name="社保到款日"></td>
+                <td><input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="减免残保金城市" maxlength="255"></td>
+                <td>
+                    <select name="社保到款日">
+                        <option value=""> </option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                        <option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option>
+                        <option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option>
+                        <option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                        <option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option>
+                        <option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                        <option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                        <option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
+                    </select>
+                </td>
                 <td>
                     <label class="radio inline">
                         <input type="radio" value="是" name="是否涉及异地参保">是
@@ -1858,6 +1874,13 @@
             }
             showTable.appendChild(tr);
             showTable.removeAttribute("hidden");
+
+            let radio = form.querySelectorAll("."+formNodeName+"Radio");
+            if(radio){
+                radio.forEach(function(ele){
+                    ele.style.display="none";
+                });
+            }
 
             let inputs = form.querySelectorAll("input");
             inputs.forEach(function(ele){

@@ -11,7 +11,7 @@
  Target Server Version : 50643
  File Encoding         : 65001
 
- Date: 11/04/2019 19:34:29
+ Date: 12/04/2019 16:06:32
 */
 
 SET NAMES utf8mb4;
@@ -27,18 +27,14 @@ CREATE TABLE `mainform`  (
   `create_userid` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '自动创建人',
   `state` tinyint(1) NULL DEFAULT 1 COMMENT '状态:1正常0删除',
   `合同编号` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `商机编号` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `客户名称` char(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `是否战略客户` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `是否一般纳税人` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `业务类型` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `产品名称` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `负责销售` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `销售所属分公司` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `首次启动人数` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `项目启动日期` date NULL DEFAULT NULL,
   `客服经理` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `客户代理人` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `账单出具日` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `到账约定` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `付款方式` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -93,7 +89,18 @@ CREATE TABLE `mainform`  (
   `商保备注` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `体检信息` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for procheck
+-- ----------------------------
+DROP TABLE IF EXISTS `procheck`;
+CREATE TABLE `procheck`  (
+  `合同编号` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `客户名称` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `产品名称` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`合同编号`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for salaryform
@@ -124,11 +131,11 @@ CREATE TABLE `securityform`  (
   `state` tinyint(1) NULL DEFAULT 1 COMMENT '状态:1正常0删除',
   `合同编号` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `社保缴纳城市` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `不收取残保金城市` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `社保到款日` date NULL DEFAULT NULL,
+  `减免残保金城市` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `社保到款日` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `是否涉及异地参保` char(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for userinfo

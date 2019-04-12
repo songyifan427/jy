@@ -229,6 +229,6 @@ def historydel(cid):
 # 修改已录入合同
 @app.route('/historyedit/<cid>')
 def historyedit(cid):
-    return 0
+    return cid
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

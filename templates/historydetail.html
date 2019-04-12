@@ -26,14 +26,14 @@
         <tr><td colspan="4">社保需求</td></tr>
         <tr>
             <td>社保缴纳城市</td>
-            <td>不收取残保金城市</td>
+            <td>减免残保金城市</td>
             <td>社保到款日</td>
             <td>是否涉及异地参保</td>
         </tr>
         {% for item in securityform %}
         <tr>
             <td>{{ item["社保缴纳城市"] }}</td>
-            <td>{{ item["不收取残保金城市"] }}</td>
+            <td>{{ item["减免残保金城市"] }}</td>
             <td>{{ item["社保到款日"] }}</td>
             <td>{{ item["是否涉及异地参保"] }}</td>
         </tr>
