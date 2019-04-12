@@ -198,8 +198,37 @@ def historydetail(cid):
         securityform = cur.fetchall()
         db.close()
         cur.close()
+
+        if mainform:
+            for thisdict in mainform:
+                delkeyList = []
+                for key, value in thisdict.items():
+                    if value == None:
+                        delkeyList.append(key)
+                if len(delkeyList) != 0:
+                    for item in delkeyList:
+                        del thisdict[item]
+
         return render_template('historydetail.html',mainform=mainform,salaryform=salaryform,securityform=securityform)
     else:
         return redirect("/history")
+# 删除已录入合同
+@app.route('/historydel/<cid>')
+def historydel(cid):
+    if cid:
+        create_userid = session.get("userid")
+        db = connect()
+        cur = db.cursor()
+        cur.execute("update LOW_PRIORITY ignore mainform set state='0' where 合同编号 = %s and create_userid = %s and state = 1",(cid,create_userid))
+        cur.execute("update LOW_PRIORITY ignore securityform set state='0' where 合同编号 = %s and create_userid = %s and state = 1",(cid, create_userid))
+        cur.execute("update LOW_PRIORITY ignore salaryform set state='0' where 合同编号 = %s and create_userid = %s and state = 1",(cid, create_userid))
+        db.commit()
+        db.close()
+        cur.close()
+    return redirect("/history")
+# 修改已录入合同
+@app.route('/historyedit/<cid>')
+def historyedit(cid):
+    return 0
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

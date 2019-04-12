@@ -27,7 +27,7 @@
              <td>{{ item["客户名称"] }}</td>
              <td>{{ item["业务类型"] }}</td>
              <td>{{ item["产品名称"] }}</td>
-             <td><a href="/historydetail/{{ item["合同编号"] }}">查看</a></td>
+             <td><a href="/historydetail/{{ item["合同编号"] }}">查看</a>&nbsp<a href="/historyedit/{{ item["合同编号"] }}">修改</a>&nbsp<a href="/historydel/{{ item["合同编号"] }}">删除</a></td>
          </tr>
         {% endfor %}
         {% endif %}
