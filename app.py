@@ -1,12 +1,14 @@
 from flask import Flask,render_template,request,redirect,make_response,session
 import pymysql
 from code import code
+from config import secret_key
+from config import mysqlhost,user,password,dbname
 
 app = Flask(__name__)
-app.secret_key="123456"
+app.secret_key=secret_key
 
 def connect():
-    db = pymysql.connect('localhost', 'root', '123456', 'hisexcel', charset='utf8',
+    db = pymysql.connect(mysqlhost, user, password, dbname, charset='utf8',
                          cursorclass=pymysql.cursors.DictCursor)
     return db
 

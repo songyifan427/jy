@@ -1,4 +1,5 @@
 from PIL import Image,ImageDraw,ImageFont
+from config import ttfurl
 import random
 import io
 
@@ -37,7 +38,7 @@ class code:
             y=random.randint(-self.height/10,self.height/10)
             text=self.codecon[random.randint(0,len(self.codecon)-1)]
             self.str+=text
-            fnt = ImageFont.truetype('C:\WINDOWS\Fonts\ARVO-REGULAR.TTF', random.randint(30,38))
+            fnt = ImageFont.truetype(ttfurl, random.randint(30,38))
             draw.text((x,y),text,fill=self.randFgColor(),font=fnt,rotate="180")
     def output(self):
         self.create()
