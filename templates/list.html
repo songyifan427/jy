@@ -1159,7 +1159,7 @@
                                     materialName.onchange = function(){
                                         let inputs = materialName.parentNode.parentNode.querySelectorAll('input');
                                         for(let i = 1;i<inputs.length;i++){
-                                            inputs[i].value = materialName.value+inputs[i].value
+                                            inputs[i].value = materialName.value+inputs[i].value;
                                         }
                                         getCheckboxValue()
                                     }
@@ -1194,7 +1194,7 @@
                                     let entryIptValue = document.querySelectorAll(".entry");
                                     for(let i = 0;i<entryIptValue.length;i++){
                                         if(entryIptValue[i].checked == true){
-                                            str = str+entryIptValue[i].value;
+                                            str = str+entryIptValue[i].value+";";
                                         }
                                     }
                                     entry.value = str;
@@ -1208,7 +1208,7 @@
                                     let turnoverIptValue = document.querySelectorAll(".turnover");
                                     for(let i = 0;i<turnoverIptValue.length;i++){
                                         if(turnoverIptValue[i].checked == true){
-                                            str = str+turnoverIptValue[i].value;
+                                            str = str+turnoverIptValue[i].value+";";
                                         }
                                     }
                                     turnover.value = str;
@@ -1497,8 +1497,13 @@
                         let str = "";
                         let setmealIptValue = document.querySelectorAll(".setmeal");
                         for(let i = 0;i<setmealIptValue.length;i++){
-                            if(setmealIptValue[i].checked == true || setmealIptValue[i].type=="text"){
+                            if(setmealIptValue[i].value){
+                                if(setmealIptValue[i].checked == true){
                                 str = str+setmealIptValue[i].value;
+                                }
+                                if(setmealIptValue[i].type=="text"){
+                                    str = str+setmealIptValue[i].value+";";
+                                }
                             }
                         }
                         setmeal.value = str;

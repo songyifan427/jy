@@ -1,7 +1,7 @@
 # encoding: utf-8
 from flask import Flask,render_template,request,redirect,make_response,session
 import pymysql
-# from code import code
+from code import code
 from config import secret_key
 from config import mysqlhost,user,password,dbname,mysqlport
 
@@ -34,48 +34,48 @@ def codeimg():
 # 验证登录
 @app.route('/checklogin',methods=["POST"])
 def checklogin():
-#     if (session.get("code") == request.form["code"].lower()):
-#         db = connect()
-#         cur = db.cursor()
-#         userid=request.form["userid"]
-#         password=request.form["password"]
-#         cur.execute('select username from userinfo where userid=%s and password=%s',(userid,password))
-#         result=cur.fetchone()
-#         db.close()
-#         cur.close()
-#         if(result):
-#             res = make_response(redirect('/'))
-#             # 登录状态
-#             session["login"]="yes"
-#             # 用户ID
-#             session["userid"]=userid
-#             # 用户名
-#             session["username"]=result["username"]
-#             return res
-#         else:
-#             return render_template('login.html',data={'tips':'用户名或密码错误'})
-#     else:
-#         return render_template('login.html',data={'tips':'验证码错误'})
-    
-    db = connect()
-    cur = db.cursor()
-    userid=request.form["userid"]
-    password=request.form["password"]
-    cur.execute('select username from userinfo where userid=%s and password=%s',(userid,password))
-    result=cur.fetchone()
-    db.close()
-    cur.close()
-    if(result):
-        res = make_response(redirect('/'))
-        # 登录状态
-        session["login"]="yes"
-        # 用户ID
-        session["userid"]=userid
-        # 用户名
-        session["username"]=result["username"]
-        return res
+    if (session.get("code") == request.form["code"].lower()):
+        db = connect()
+        cur = db.cursor()
+        userid=request.form["userid"]
+        password=request.form["password"]
+        cur.execute('select username from userinfo where userid=%s and password=%s',(userid,password))
+        result=cur.fetchone()
+        db.close()
+        cur.close()
+        if(result):
+            res = make_response(redirect('/'))
+            # 登录状态
+            session["login"]="yes"
+            # 用户ID
+            session["userid"]=userid
+            # 用户名
+            session["username"]=result["username"]
+            return res
+        else:
+            return render_template('login.html',data={'tips':'用户名或密码错误'})
     else:
-        return render_template('login.html',data={'tips':'用户名或密码错误'})
+        return render_template('login.html',data={'tips':'验证码错误'})
+    
+    # db = connect()
+    # cur = db.cursor()
+    # userid=request.form["userid"]
+    # password=request.form["password"]
+    # cur.execute('select username from userinfo where userid=%s and password=%s',(userid,password))
+    # result=cur.fetchone()
+    # db.close()
+    # cur.close()
+    # if(result):
+    #     res = make_response(redirect('/'))
+    #     # 登录状态
+    #     session["login"]="yes"
+    #     # 用户ID
+    #     session["userid"]=userid
+    #     # 用户名
+    #     session["username"]=result["username"]
+    #     return res
+    # else:
+    #     return render_template('login.html',data={'tips':'用户名或密码错误'})
    
 # 退出登录
 @app.route('/logout')
