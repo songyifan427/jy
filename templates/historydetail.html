@@ -29,6 +29,7 @@
             <td>减免残保金城市</td>
             <td>社保到款日</td>
             <td>是否涉及异地参保</td>
+            <td>操作</td>
         </tr>
         {% for item in securityform %}
         <tr>
@@ -36,6 +37,7 @@
             <td>{{ item["减免残保金城市"] }}</td>
             <td>{{ item["社保到款日"] }}</td>
             <td>{{ item["是否涉及异地参保"] }}</td>
+            <td><a href="../delChildForm/securityform/{{ item["id"] }}">删除</a></td>
         </tr>
         {% endfor %}
     </table>
@@ -49,6 +51,7 @@
             <td>工资发放日</td>
             <td>工资发放类型</td>
             <td>薪税需求备注</td>
+            <td>操作</td>
         </tr>
         {% for item in salaryform %}
         <tr>
@@ -57,6 +60,7 @@
             <td>{{ item["工资发放日"] }}</td>
             <td>{{ item["工资发放类型"] }}</td>
             <td>{{ item["薪税需求备注"] }}</td>
+            <td><a href="../delChildForm/salaryform/{{ item["id"] }}">删除</a></td>
         </tr>
         {% endfor %}
     </table>

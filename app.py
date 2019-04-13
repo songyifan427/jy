@@ -248,9 +248,112 @@ def historydel(cid):
         db.close()
         cur.close()
     return redirect("/history")
-# 修改已录入合同
-@app.route('/historyedit/<cid>')
-def historyedit(cid):
-    return cid
+@app.route('/delChildForm/<c_class>/<id>')
+def delChildForm(c_class,id):
+    if id and c_class:
+        create_userid = session.get("userid")
+        db = connect()
+        cur = db.cursor()
+        if c_class == "salaryform":
+            cur.execute(
+                "update LOW_PRIORITY ignore salaryform set state='0' where id = %s and create_userid = %s and state = 1",
+                (id, create_userid))
+            db.commit()
+        elif c_class == "securityform":
+            cur.execute(
+                "update LOW_PRIORITY ignore securityform set state='0' where id = %s and create_userid = %s and state = 1",
+                (id, create_userid))
+            db.commit()
+        db.close()
+        cur.close()
+    return redirect("/history")
+
+# 修改已录入合同入口
+@app.route('/historyedit/<cid>/<type>/<cls>')
+def historyedit(cid,type,cls):
+    if cid and type and cls:
+        productTypeList = {"1": "代理", "2": "劳务派遣", "3": "外包", "4": "薪酬", "5": "福利"}
+        productClsList = {"1": "金柚宝_标准", "2": "金柚宝_尊享", "3": "金柚宝_尊贵", "4": "金柚宝_单立户", "5": "金柚宝_尊享单立户", "6": "金柚宝_同业",
+                          "7": "金柚宝_尊享同业", "8": "企业社保通_标准", "9": "企业社保通_单立户", "10": "金柚帮帮", "11": "金柚管家",
+                          "12": "金柚管家_差额", "13": "金柚小灵", "14": "金柚小秘", "15": "金柚多多", "16": "金柚康康_商保", "17": "金柚康康_体检"}
+        for key, value in productTypeList.items():
+            if value == type:
+                typeKey = key
+        for key, value in productClsList.items():
+            if value == cls:
+                clsKey = key
+        create_userid = session.get("userid")
+        db = connect()
+        cur = db.cursor()
+        cur.execute("select * from mainform where 合同编号 = %s and create_userid = %s and state = 1", (cid, create_userid))
+        mainform = cur.fetchone()
+
+        cur.execute("select * from salaryform where 合同编号 = %s and create_userid = %s and state = 1",
+                    (cid, create_userid))
+        salaryform = cur.fetchall()
+        cur.execute("select * from securityform where 合同编号 = %s and create_userid = %s and state = 1",
+                    (cid, create_userid))
+        securityform = cur.fetchall()
+        db.close()
+        cur.close()
+        openTime = ""
+        if mainform:
+            delkeyList = []
+            for key, value in mainform.items():
+                if key == "create_time" or  key == "项目启动日期" or value == None:
+                    delkeyList.append(key)
+            if len(delkeyList) != 0:
+                for item in delkeyList:
+                    if item == "项目启动日期":
+                        openTime = mainform.get(item)
+                    del mainform[item]
+        openTime=str(openTime)
+        mainform.setdefault("项目启动日期",openTime)
+
+        if securityform:
+            for thisdict in securityform:
+                securityDelkeyList = []
+                for key, value in thisdict.items():
+                    if key == "create_time" or value == None:
+                        securityDelkeyList.append(key)
+                if len(securityDelkeyList) != 0:
+                    for item in securityDelkeyList:
+                        del thisdict[item]
+        if salaryform:
+            for salarydict in salaryform:
+                salaryDelkeyList = []
+                for key, value in salarydict.items():
+                    if key == "create_time" or value == None:
+                        salaryDelkeyList.append(key)
+                if len(salaryDelkeyList) != 0:
+                    for item in salaryDelkeyList:
+                        del salarydict[item]
+        return render_template('historyedit.html',type=typeKey, cls=clsKey, typeName=productTypeList[typeKey],
+                               clsName=productClsList[clsKey], mainform=mainform,salaryform=salaryform,
+                               securityform=securityform,cid=cid)
+    else:
+        return redirect("/history")
+# 提交修改已录入合同
+@app.route('/updateMainForm/<cid>',methods=["POST"])
+def updateMainForm(cid):
+    create_userid = session.get("userid")
+    data = dict(request.form)
+    delkeyList = []
+    for key,value in data.items():
+        if value=="":
+            delkeyList.append(key)
+    if len(delkeyList)!=0:
+        for item in delkeyList:
+            del data[item]
+    keyList = list(data.keys())
+    valueList=tuple(data.values())
+    db = connect()
+    cur = db.cursor()
+    cur.execute("update LOW_PRIORITY ignore mainform set " + ','.join([item+' = %s' for item in keyList]) +" where `合同编号` = '" + cid + "' and create_userid = '" + create_userid + "' and state = 1",valueList)
+    db.commit()
+    db.close()
+    cur.close()
+    return "success"
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
