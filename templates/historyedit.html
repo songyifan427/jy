@@ -1792,8 +1792,13 @@
 
     function init() {
         if(minDate["合同编号"]){
-            document.querySelector("#contractid2").value = minDate["合同编号"];
-            document.querySelector("#contractid1").value = minDate["合同编号"];
+            if(document.querySelector("#contractid2")){
+                document.querySelector("#contractid2").value = minDate["合同编号"];
+            }
+            if(document.querySelector("#contractid1")){
+                document.querySelector("#contractid1").value = minDate["合同编号"];
+            }
+            
         }
         if(minDate["账单出具日"]){
             setOptionsStatus('order',minDate["账单出具日"])
