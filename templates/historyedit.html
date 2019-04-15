@@ -22,9 +22,9 @@
             <tr><th colspan="4">启动函基本信息</th></tr>
             <tr>
                 <td>合同编号</td>
-                <td><input type="text" class="wordNotEmpty" id="contractid0" name="合同编号" maxlength="64" value="{{ mainform["合同编号"] }}"></td>
+                <td><input type="text" class="wordNotEmpty" id="contractid0" name="合同编号" maxlength="64" value="{{ mainform['合同编号'] }}"></td>
                 <td>客户名称</td>
-                <td><input type="text" class="wordNotEmpty" name="客户名称" maxlength="255" value="{{ mainform["客户名称"] }}"></td>
+                <td><input type="text" class="wordNotEmpty" name="客户名称" maxlength="255" value="{{ mainform['客户名称'] }}"></td>
             </tr>
             <tr>
                 <td>业务类型</td>
@@ -2098,7 +2098,7 @@
         return regex.test(value);
     }
     function isWord(value) {
-        var regex = new RegExp("^([\u4e00-\u9fa5]|[a-zA-Z]|[0-9]|[,]|[，]|[;]|[；]|[、]|[(]|[)]|[（]|[）]){0,}$");
+        var regex = new RegExp("^([\u4e00-\u9fa5]|[a-zA-Z]|[0-9]|[,]|[，]|[;]|[；]|[、]|[(]|[)]|[（]|[）]|[-]){0,}$");
         return regex.test(value);
     }
     function isNumberNotEmpty(value) {
@@ -2106,7 +2106,7 @@
         return regex.test(value);
     }
     function isWordNotEmpty(value) {
-        var regex = new RegExp("^([\u4e00-\u9fa5]|[a-zA-Z]|[0-9]|[,]|[，]|[;]|[；]|[、]|[(]|[)]|[（]|[）]){1,}$");
+        var regex = new RegExp("^([\u4e00-\u9fa5]|[a-zA-Z]|[0-9]|[,]|[，]|[;]|[；]|[、]|[(]|[)]|[（]|[）]|[-]){1,}$");
         return regex.test(value);
     }
     function isNotEmpyt(value) {

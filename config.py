@@ -4,12 +4,12 @@ ttfurl='.\Arvo-Regular.ttf'
 #session_key
 secret_key='123456'
 #mysql_host
-mysqlhost="localhost"
+mysqlhost="172.17.0.4"
 #mysql_port
-mysqlport=3306
+mysqlport=3689
 #mysql_user
-user='root'
+user='python'
 #mysql_password
-password='123456'
+password='RolzO%j4#$yee%LIOJ'
 #mysql_db
 dbname= 'hisexcel'

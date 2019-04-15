@@ -34,48 +34,48 @@ def codeimg():
 # 验证登录
 @app.route('/checklogin',methods=["POST"])
 def checklogin():
-    if (session.get("code") == request.form["code"].lower()):
-        db = connect()
-        cur = db.cursor()
-        userid=request.form["userid"]
-        password=request.form["password"]
-        cur.execute('select username from userinfo where userid=%s and password=%s',(userid,password))
-        result=cur.fetchone()
-        db.close()
-        cur.close()
-        if(result):
-            res = make_response(redirect('/'))
-            # 登录状态
-            session["login"]="yes"
-            # 用户ID
-            session["userid"]=userid
-            # 用户名
-            session["username"]=result["username"]
-            return res
-        else:
-            return render_template('login.html',data={'tips':'用户名或密码错误'})
-    else:
-        return render_template('login.html',data={'tips':'验证码错误'})
-    
-    # db = connect()
-    # cur = db.cursor()
-    # userid=request.form["userid"]
-    # password=request.form["password"]
-    # cur.execute('select username from userinfo where userid=%s and password=%s',(userid,password))
-    # result=cur.fetchone()
-    # db.close()
-    # cur.close()
-    # if(result):
-    #     res = make_response(redirect('/'))
-    #     # 登录状态
-    #     session["login"]="yes"
-    #     # 用户ID
-    #     session["userid"]=userid
-    #     # 用户名
-    #     session["username"]=result["username"]
-    #     return res
+    # if (session.get("code") == request.form["code"].lower()):
+    #     db = connect()
+    #     cur = db.cursor()
+    #     userid=request.form["userid"]
+    #     password=request.form["password"]
+    #     cur.execute('select username from userinfo where userid=%s and password=%s',(userid,password))
+    #     result=cur.fetchone()
+    #     db.close()
+    #     cur.close()
+    #     if(result):
+    #         res = make_response(redirect('/'))
+    #         # 登录状态
+    #         session["login"]="yes"
+    #         # 用户ID
+    #         session["userid"]=userid
+    #         # 用户名
+    #         session["username"]=result["username"]
+    #         return res
+    #     else:
+    #         return render_template('login.html',data={'tips':'用户名或密码错误'})
     # else:
-    #     return render_template('login.html',data={'tips':'用户名或密码错误'})
+    #     return render_template('login.html',data={'tips':'验证码错误'})
+    
+    db = connect()
+    cur = db.cursor()
+    userid=request.form["userid"]
+    password=request.form["password"]
+    cur.execute('select username from userinfo where userid=%s and password=%s',(userid,password))
+    result=cur.fetchone()
+    db.close()
+    cur.close()
+    if(result):
+        res = make_response(redirect('/'))
+        # 登录状态
+        session["login"]="yes"
+        # 用户ID
+        session["userid"]=userid
+        # 用户名
+        session["username"]=result["username"]
+        return res
+    else:
+        return render_template('login.html',data={'tips':'用户名或密码错误'})
    
 # 退出登录
 @app.route('/logout')
@@ -354,6 +354,25 @@ def updateMainForm(cid):
     db.close()
     cur.close()
     return "success"
+
+@app.route('/checkcon',methods=["GET"])
+def checkcon():
+    productList = {"8":"101","1":"102","4":"103","6":"104","15":"106","9":"107","11":"108","10":"110","14":"112","2":"113","5":"114","3":"115","7":"116","16":"117","17":"117","12":"118","13":"119"}
+    conid = request.args.get("conid")
+    cus = request.args.get("cus")
+    cls = request.args.get("cls")
+    db = connect()
+    cur = db.cursor()
+    print('select id from bus_contract where cont_code = %s and cust_cn = %s and combo_id = %s'%(conid,cus,productList[cls]))
+    cur.execute('select id from bus_contract where cont_code = %s and cust_cn = %s and combo_id = %s',(conid,cus,productList[cls]))
+    result = cur.fetchall()
+    print(result)
+    db.close()
+    cur.close()
+    if result:
+        return "success"
+    else:
+        return "fail"    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
