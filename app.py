@@ -196,7 +196,7 @@ def uploadSalaryForm():
 # 查看已录入合同入口
 @app.route('/history')
 def history():
-    create_userid = session.get("userid");
+    create_userid = session.get("userid")
     db = connect()
     cur = db.cursor()
     cur.execute("select id,合同编号,客户名称,业务类型,产品名称 from mainform where create_userid = %s and state = 1",(create_userid))
