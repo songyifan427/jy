@@ -135,8 +135,8 @@
                 <td>
                     <select name="渠道返佣方式">
                         <option value=""> </option>
-                        <option value="一次性收">一次性收</option>
-                        <option value="按人月收">按人月收</option>
+                        <option value="一次性收费(元/项目)">一次性收费(元/项目)</option>
+                        <option value=" 按月收费(人/元/月)">按月收费(人/元/月)</option>
                     </select>
                 </td>
                 <td>渠道返佣金额(选填)</td>
@@ -155,7 +155,6 @@
                 let proname = "{{ cls }}";
                 var ajax=new XMLHttpRequest()
                 ajax.onload=function(ev){
-                    console.log(ajax.response)
                     if(ajax.response!="success"){
                         alert("合同编号、客户名称、产品名称不匹配，请检查")
                     }
@@ -307,10 +306,10 @@
                 <td>风险金收费方式</td>
                 <td>
                     <label class="radio inline">
-                        <input type="radio" value="一次性收费" name="风险金收费方式" checked>一次性收费
+                        <input type="radio" value="一次性收费（元/项目）" name="风险金收费方式" checked>一次性收费（元/项目）
                     </label>
                     <label class="radio inline">
-                        <input type="radio" value="按月收费" name="风险金收费方式">按月收费
+                        <input type="radio" value="按月收费（人/元/月）" name="风险金收费方式"> 按月收费（人/元/月）
                     </label>
                 </td>
             </tr>
@@ -341,11 +340,15 @@
                         <option value="客户">客户</option>
                         <option value="我司">我司</option>
                     </select>
+                    <div style="color:red">tips:该字段为客户需承担的业务税率承担方式，非发票票面税率承担方式</div>
                 </td>
             </tr>
             <tr>
                 <td>税率(选填)&nbsp(%)</td>
-                <td><input  type="text" class="numberNotEmpty" placeholder="填写百分比数值，保留两位小数,例如:6.84" name="税率"  maxlength="64"></td>
+                <td>
+                    <input  type="text" class="numberNotEmpty"  name="税率"  maxlength="64">
+                    <div style="color:red">tips:填写客户需要承担税率，例如6.84%，非发票票面税率</div>
+                </td>
                 {% if cls =="13" %}
                 <td>灵活用工个人税费承担方式</td>
                 <td>
@@ -353,6 +356,7 @@
                         <option value="客户承担">客户承担</option>
                         <option value="个人承担">个人承担</option>
                     </select>
+                    <div style="color:red">tips:该字段为灵活用工个人税率承担方式，非发票票面税率承担方式</div>
                 </td>
                 {% elif cls in ("11","12")  %}
                 <td colspan="2"></td>
@@ -1561,7 +1565,7 @@
             </tr>
             <tr>
                 <th>社保缴纳城市</th>
-                <th>减免残保金城市(选填)</th>
+                <th>是否减免残保金</th>
                 <th>社保到款日</th>
                 <th>是否涉及异地参保</th>
             </tr>
@@ -1573,8 +1577,9 @@
                     <!-- <input type="text" class="wordNotEmpty" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255"> -->
                 </td>
                 <td>
-                    <select name="减免残保金城市" id="canbaoCity">
-
+                    <select name="是否减免残保金" >
+                        <option value="否">否</option>
+                        <option value="是">是</option>
                     </select>
                     <!-- <input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="减免残保金城市" maxlength="255"> -->
                 </td>
@@ -1605,7 +1610,7 @@
             </tr>
             <tr>
                 <th>社保缴纳城市(选填)</th>
-                <th>减免残保金城市(选填)</th>
+                <th>是否减免残保金</th>
                 <th>社保到款日(选填)</th>
                 <th>是否涉及异地参保(选填)</th>
             </tr>
@@ -1617,8 +1622,9 @@
                     <!-- <input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255"> -->
                 </td>
                 <td>
-                    <select name="减免残保金城市" id="canbaoCity">
-
+                    <select name="是否减免残保金" >
+                            <option value="否">否</option>
+                            <option value="是">是</option>
                     </select>
                     <!-- <input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="减免残保金城市" maxlength="255"> -->
                 </td>
@@ -1823,9 +1829,6 @@
     function init() {
         if(document.getElementById('shebaoCity')){
             creatCity('shebaoCity');
-        }
-        if(document.getElementById('canbaoCity')){
-            creatCity('canbaoCity');
         }
         if(document.getElementById('salaryCity')){
             creatCity('salaryCity');
