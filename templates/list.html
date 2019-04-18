@@ -21,9 +21,9 @@
         <table class="table table-striped table-bordered table-hover">
             <tr><th colspan="4">启动函基本信息</th></tr>
             <tr>
-                <td>合同编号</td>
+                <td><span style="color:red">*</span>合同编号</td>
                 <td><input type="text" class="wordNotEmpty" id="contractid0" name="合同编号" maxlength="64"></td>
-                <td>客户名称</td>
+                <td><span style="color:red">*</span>客户名称</td>
                 <td><input type="text"  name="客户名称" maxlength="255" id="cus"></td>
             </tr>
             <tr>
@@ -38,15 +38,15 @@
             </tr>
             <tr>
                 <td>首次启动人数</td>
-                <td><input type="text" class="numberNotEmpty" name="首次启动人数" maxlength="64"></td>
-                <td>项目启动日期</td>
-                <td><input type="date" class="notEmpty" name="项目启动日期"></td>
-            </tr>
-            <tr>
-                <td>客服经理</td>
+                <td><input type="text" class="numberNotEmpty" name="首次启动人数" value="1" maxlength="64"></td>
+                <td><span style="color:red">*</span>运营经理</td>
                 <td><input type="text"class="wordNotEmpty" name="客服经理" maxlength="64"></td>
-                <td colspan="2"></td>
             </tr>
+{#            <tr>#}
+{#                <td>运营组长</td>#}
+{#                <td><input type="text"class="wordNotEmpty" name="运营组长" maxlength="64"></td>#}
+{#                <td colspan="2"></td>#}
+{#            </tr>#}
             <tr>
                 <td>账单出具日</td>
                 <td>
@@ -86,15 +86,15 @@
                 <td>是否涉及宣讲</td>
                 <td>
                     <select name="是否涉及宣讲" class="notEmpty">
-                        <option value="">请选择</option>
-                        <option value="是">是</option>
                         <option value="否">否</option>
+                        <option value="是">是</option>
+
                     </select>
                 </td>
                 <td>是否涉及社保公积金转移</td>
                 <td>
                     <select name="是否涉及社保公积金转移" class="notEmpty">
-                        <option value="">请选择</option>
+
                         <option value="是">是</option>
                         <option value="否">否</option>
                     </select>
@@ -104,17 +104,16 @@
                 <td>是否涉及退休办理</td>
                 <td>
                     <select name="是否涉及退休办理" class="notEmpty">
-                        <option value="">请选择</option>
-                        <option value="是">是</option>
                         <option value="否">否</option>
+                        <option value="是">是</option>
+
                     </select>
                 </td>
                 <td>是否涉及三期人员</td>
                 <td>
                     <select name="是否涉及三期人员" class="notEmpty">
-                        <option value="">请选择</option>
+                       <option value="否">否</option>
                         <option value="是">是</option>
-                        <option value="否">否</option>
                     </select>
                 </td>
             </tr>
@@ -122,9 +121,9 @@
                 <td>是否涉及贷款人员</td>
                 <td>
                     <select name="是否涉及贷款人员" class="notEmpty">
-                        <option value="">请选择</option>
-                        <option value="是">是</option>
                         <option value="否">否</option>
+                        <option value="是">是</option>
+
                     </select>
                 </td>
                 <td>渠道名称(选填)</td>
@@ -157,6 +156,9 @@
                 ajax.onload=function(ev){
                     if(ajax.response!="success"){
                         alert("合同编号、客户名称、产品名称不匹配，请检查")
+                        document.getElementById('contractid0').value = '';
+                        document.getElementById('cus').value = '';
+                        return false;
                     }
                 }
                 ajax.open("get","/checkcon?conid="+conid+"&cus="+cus.value+"&cls="+proname)
@@ -181,13 +183,13 @@
                 </td>
             </tr>
             <tr id="sfo_tr_1">
-                <td>服务费报价(元)</td>
+                <td><span style="color:red">*</span>服务费报价(元)</td>
                 <td>
                     <input type="text" class="number" name="服务费报价1" maxlength="64">&nbsp人/元/月
                 </td>
             </tr>
             <tr id="sfo_tr_2" style="display: none">
-                <td>服务费报价(元)</td>
+                <td><span style="color:red">*</span>服务费报价(元)</td>
                 <td>
                     <label class="checkbox inline">
                         <input type="checkbox" value="薪资" class="chargeClass"> 薪资
@@ -205,7 +207,7 @@
                         <input type="checkbox" value="残保金" class="chargeClass"> 残保金
                     </label>
                     <label class="checkbox inline">
-                        <input type="checkbox" value="风险金" class="chargeClass"> 风险金
+                        <input type="checkbox" value="风险金"  class="chargeClass"> 风险金
                     </label>
                     <input type="text" class="number" id="sfo_ipt_2" name="服务费报价2比例" maxlength="64">&nbsp%
                     &nbsp下限&nbsp<input type="text" class="number" name="服务费报价2下限" maxlength="64">&nbsp人/元/月
@@ -277,7 +279,7 @@
         <table class="table table-striped table-bordered table-hover">
             <tr><th colspan="4">会员费</th></tr>
             <tr>
-                <td>会员费(元/年)</td>
+                <td><span style="color:red">*</span>会员费(元/年)</td>
                 <td><input type="text" class="numberNotEmpty" name="会员费" maxlength="64"></td>
                 <td>会员费收取月份</td>
                 <td>
@@ -306,19 +308,58 @@
                 <td>风险金收费方式</td>
                 <td>
                     <label class="radio inline">
-                        <input type="radio" value="一次性收费（元/项目）" name="风险金收费方式" checked>一次性收费（元/项目）
+                        <input type="radio" value="一次性收费（元/项目）" name="风险金收费方式"  checked>一次性收费（元/项目）
                     </label>
                     <label class="radio inline">
-                        <input type="radio" value="按月收费（人/元/月）" name="风险金收费方式"> 按月收费（人/元/月）
+                        <input type="radio" value="按月收费（人/元/月）" name="风险金收费方式" > 按月收费（人/元/月）
+                    </label>
+                    <label class="radio inline">
+                        <input type="radio" value="按比例收费" name="风险金收费方式" > 按比例收费
                     </label>
                 </td>
             </tr>
             <tr>
-                <td>风险金报价(元)</td>
-                <td><input type="text" class="numberNotEmpty" name="风险金报价" maxlength="64"></td>
+                <td><span style="color:red">*</span>风险金报价(元)</td>
+                <td>
+                    <div style="display: block;" id="commonPrice">
+{#                        <input type="text" class="numberNotEmpty" name="风险金报价" id="ratePriceNormal" maxlength="64">#}
+                        <input type="text"  name="风险金报价" id="ratePriceNormal" maxlength="64">
+                    </div>
+                     <div style="display: none;" id="ratePrice">
+                       全额收入<input type="text" class="number" id="ratePrice1" name="风险金报价" maxlength="64" style="width: 10%">%&nbsp;
+                    &nbsp;下限&nbsp;<input type="text" class="number" id="ratePrice2" name="风险金报价" maxlength="64" style="width: 20%">&nbsp人/元/月
+                    </div>
+                </td>
                 <td colspan="2"></td>
             </tr>
+            <tr hidden><td colspan="2"><input type="text" name="风险金报价" value="" id="ratePrice"></td></tr>
         </table>
+            <script>
+                $('input[type=radio][name=风险金收费方式]').change(function() {
+
+                    var _dom1 = document.getElementById('commonPrice');
+                    var _dom2 = document.getElementById('ratePrice');
+                    if (this.value == '一次性收费（元/项目）' || this.value == '按月收费（人/元/月）'  ) {
+                        if(_dom1 && _dom2 ){
+                            _dom1.style.display = 'block';
+                            _dom2.style.display = 'none';
+                            if(document.getElementById('ratePrice1') && document.getElementById('ratePrice2')){
+                                document.getElementById('ratePrice1').value = '';
+                                document.getElementById('ratePrice2').value = '';
+                            }
+                        }
+                    }
+                    else if (this.value == '按比例收费') {
+                        if(_dom1 && _dom2){
+                             _dom1.style.display = 'none';
+                            _dom2.style.display = 'block';
+                            if(document.getElementById('ratePriceNormal')){
+                                document.getElementById('ratePriceNormal').value = '';
+                            }
+                        }
+                    }
+                });
+            </script>
         {% endif %}
 
         {% if cls in ("11","12","13") %}
@@ -374,85 +415,17 @@
                 <td>雇佣主体(选填)</td>
                 <td>
                     <select name="雇佣主体">
-                        <option value=""> </option>
-                        <option value="客户">客户</option>
                         <option value="我司">我司</option>
+                        <option value="客户">客户</option>
+
                     </select>
                 </td>
-                <td>我司签约主体(选填)</td>
+                <td>员工合同签约主体(选填)</td>
                 <td>
                     <input type="text" class="word" placeholder="填写金柚网分公司全称，多个主体全部填写，用分号“；”分开" name="我司签约主体" maxlength="128">
                 </td>
             </tr>
-            <tr>
-                <td>期限类型(选填)</td>
-                <td>
-                    <label class="checkbox inline">
-                        <input type="checkbox" value="固定期限" class="term"> 固定期限
-                    </label>
-                    <label class="checkbox inline">
-                        <input type="checkbox" value="非固定期限" class="term"> 非固定期限
-                    </label>
-                    <label class="checkbox inline">
-                        <input type="checkbox" value="完成任务期限" class="term"> 完成任务期限
-                    </label>
-                </td>
-                <td>雇佣合同期限(选填)</td>
-                <td>
-                    <select name="雇佣合同期限">
-                        <option value=""> </option>
-                        <option value="1个月">1个月</option>
-                        <option value="2个月">2个月</option>
-                        <option value="3个月">3个月</option>
-                        <option value="4个月">4个月</option>
-                        <option value="5个月">5个月</option>
-                        <option value="6个月">6个月</option>
-                        <option value="7个月">7个月</option>
-                        <option value="8个月">8个月</option>
-                        <option value="9个月">9个月</option>
-                        <option value="10个月">10个月</option>
-                        <option value="11个月">11个月</option>
-                        <option value="12个月">12个月</option>
-                        <option value="18个月">18个月</option>
-                        <option value="24个月">24个月</option>
-                        <option value="36个月">36个月</option>
-                    </select>
-                </td>
-            </tr>
-            <tr hidden><td colspan="4"><input type="text" name="期限类型" value="固定期限" id="term" maxlength="64"></td></tr>
-            <script>
-                let term = document.querySelector("#term");
-                let termIpt = document.querySelectorAll(".term");
-                for(let i = 0;i<termIpt.length;i++){
-                    termIpt[i].onchange=function () {
-                        let str = "";
-                        let termIptValue = document.querySelectorAll(".term");
-                        for(let i = 0;i<termIptValue.length;i++){
-                            if(termIptValue[i].checked == true){
-                                str = str+termIptValue[i].value;
-                            }
-                        }
-                        term.value = str;
-                    }
-                }
-            </script>
-            <tr>
-                <td>雇佣合同签署试用期(选填)</td>
-                <td>
-                    <select name="雇佣合同签署试用期">
-                        <option value=""> </option>
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
+                <tr>
                 <td>雇佣合同类型(选填)</td>
                 <td colspan="3">
                     <label class="checkbox inline">
@@ -489,6 +462,75 @@
                     }
                 }
             </script>
+            <tr>
+                <td>雇佣合同签署试用期(选填)</td>
+                <td>
+                    <select name="雇佣合同签署试用期">
+                        <option value=""> </option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+            <td>期限类型(选填)</td>
+            <td>
+                <label class="checkbox inline">
+                    <input type="checkbox" value="固定期限" class="term"> 固定期限
+                </label>
+                <label class="checkbox inline">
+                    <input type="checkbox" value="非固定期限" class="term"> 非固定期限
+                </label>
+                <label class="checkbox inline">
+                    <input type="checkbox" value="完成任务期限" class="term"> 完成任务期限
+                </label>
+            </td>
+            <td>雇佣合同期限(选填)</td>
+            <td>
+                <select name="雇佣合同期限">
+                    <option value=""> </option>
+                    <option value="1个月">1个月</option>
+                    <option value="2个月">2个月</option>
+                    <option value="3个月">3个月</option>
+                    <option value="4个月">4个月</option>
+                    <option value="5个月">5个月</option>
+                    <option value="6个月">6个月</option>
+                    <option value="7个月">7个月</option>
+                    <option value="8个月">8个月</option>
+                    <option value="9个月">9个月</option>
+                    <option value="10个月">10个月</option>
+                    <option value="11个月">11个月</option>
+                    <option value="12个月">12个月</option>
+                    <option value="18个月">18个月</option>
+                    <option value="24个月">24个月</option>
+                    <option value="36个月">36个月</option>
+                </select>
+            </td>
+        </tr>
+            <tr hidden><td colspan="4"><input type="text" name="期限类型" value="固定期限" id="term" maxlength="64"></td></tr>
+            <script>
+                let term = document.querySelector("#term");
+                let termIpt = document.querySelectorAll(".term");
+                for(let i = 0;i<termIpt.length;i++){
+                    termIpt[i].onchange=function () {
+                        let str = "";
+                        let termIptValue = document.querySelectorAll(".term");
+                        for(let i = 0;i<termIptValue.length;i++){
+                            if(termIptValue[i].checked == true){
+                                str = str+termIptValue[i].value;
+                            }
+                        }
+                        term.value = str;
+                    }
+                }
+            </script>
+
             <tr>
                 <td>雇佣合同签约方式(选填)</td>
                 <td>
@@ -583,82 +625,16 @@
                 <td>雇佣主体</td>
                 <td>
                     <select name="雇佣主体">
-                        <option value="客户">客户</option>
                         <option value="我司">我司</option>
+                        <option value="客户">客户</option>
                     </select>
                 </td>
-                <td>我司签约主体</td>
+                <td>员工合同签约主体</td>
                 <td>
                     <input type="text" class="wordNotEmpty" placeholder="填写金柚网分公司全称，多个主体全部填写，用分号“；”分开" name="我司签约主体" maxlength="128">
                 </td>
             </tr>
-            <tr>
-                <td>期限类型</td>
-                <td>
-                    <label class="checkbox inline">
-                        <input type="checkbox" value="固定期限" class="term" checked> 固定期限
-                    </label>
-                    <label class="checkbox inline">
-                        <input type="checkbox" value="非固定期限" class="term"> 非固定期限
-                    </label>
-                    <label class="checkbox inline">
-                        <input type="checkbox" value="完成任务期限" class="term"> 完成任务期限
-                    </label>
-                </td>
-                <td>雇佣合同期限</td>
-                <td>
-                    <select name="雇佣合同期限">
-                        <option value="1个月">1个月</option>
-                        <option value="2个月">2个月</option>
-                        <option value="3个月">3个月</option>
-                        <option value="4个月">4个月</option>
-                        <option value="5个月">5个月</option>
-                        <option value="6个月">6个月</option>
-                        <option value="7个月">7个月</option>
-                        <option value="8个月">8个月</option>
-                        <option value="9个月">9个月</option>
-                        <option value="10个月">10个月</option>
-                        <option value="11个月">11个月</option>
-                        <option value="12个月">12个月</option>
-                        <option value="18个月">18个月</option>
-                        <option value="24个月">24个月</option>
-                        <option value="36个月">36个月</option>
-                    </select>
-                </td>
-            </tr>
-            <tr hidden><td colspan="4"><input type="text" name="期限类型" value="固定期限" id="term" maxlength="64"></td></tr>
-            <script>
-                let term = document.querySelector("#term");
-                let termIpt = document.querySelectorAll(".term");
-                for(let i = 0;i<termIpt.length;i++){
-                    termIpt[i].onchange=function () {
-                        let str = "";
-                        let termIptValue = document.querySelectorAll(".term");
-                        for(let i = 0;i<termIptValue.length;i++){
-                            if(termIptValue[i].checked == true){
-                                str = str+termIptValue[i].value;
-                            }
-                        }
-                        term.value = str;
-                    }
-                }
-            </script>
-            <tr>
-                <td>雇佣合同签署试用期</td>
-                <td>
-                    <select name="雇佣合同签署试用期">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                </td>
-                <td colspan="2"></td>
-            </tr>
-            <tr>
+                 <tr>
                 <td>雇佣合同类型</td>
                 <td colspan="3">
                     <label class="checkbox inline">
@@ -695,6 +671,73 @@
                     }
                 }
             </script>
+            <tr>
+                <td>雇佣合同签署试用期</td>
+                <td>
+                    <select name="雇佣合同签署试用期">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </td>
+                <td colspan="2"></td>
+            </tr>
+           <tr>
+    <td>期限类型</td>
+    <td>
+        <label class="checkbox inline">
+            <input type="checkbox" value="固定期限" class="term" checked> 固定期限
+        </label>
+        <label class="checkbox inline">
+            <input type="checkbox" value="非固定期限" class="term"> 非固定期限
+        </label>
+        <label class="checkbox inline">
+            <input type="checkbox" value="完成任务期限" class="term"> 完成任务期限
+        </label>
+    </td>
+    <td>雇佣合同期限</td>
+    <td>
+        <select name="雇佣合同期限">
+            <option value="1个月">1个月</option>
+            <option value="2个月">2个月</option>
+            <option value="3个月">3个月</option>
+            <option value="4个月">4个月</option>
+            <option value="5个月">5个月</option>
+            <option value="6个月">6个月</option>
+            <option value="7个月">7个月</option>
+            <option value="8个月">8个月</option>
+            <option value="9个月">9个月</option>
+            <option value="10个月">10个月</option>
+            <option value="11个月">11个月</option>
+            <option value="12个月">12个月</option>
+            <option value="18个月">18个月</option>
+            <option value="24个月">24个月</option>
+            <option value="36个月">36个月</option>
+        </select>
+    </td>
+</tr>
+            <tr hidden><td colspan="4"><input type="text" name="期限类型" value="固定期限" id="term" maxlength="64"></td></tr>
+            <script>
+                let term = document.querySelector("#term");
+                let termIpt = document.querySelectorAll(".term");
+                for(let i = 0;i<termIpt.length;i++){
+                    termIpt[i].onchange=function () {
+                        let str = "";
+                        let termIptValue = document.querySelectorAll(".term");
+                        for(let i = 0;i<termIptValue.length;i++){
+                            if(termIptValue[i].checked == true){
+                                str = str+termIptValue[i].value;
+                            }
+                        }
+                        term.value = str;
+                    }
+                }
+            </script>
+
             <tr>
                 <td>雇佣合同签约方式</td>
                 <td>
@@ -1533,14 +1576,17 @@
             {% endif %}
         </table>
         {% endif %}
-        <input type="submit" class="btn btn-danger submitbtn" style="float: right;margin: 0px 10px 15px 0;" disabled="disabled" value="提交">
-        <a class="btn btn-info" style="float: right;margin: 0px 10px 15px 0;" href="javascript:;" onclick="checkout('mainForm')">检查</a>
+{#        <input type="submit" class="btn btn-danger submitbtn" style="float: right;margin: 0px 10px 15px 0;" disabled="disabled" value="提交">#}
+{#        <a class="btn btn-info" style="float: right;margin: 0px 10px 15px 0;" href="javascript:;" onclick="checkout('mainForm')">检查</a>#}
     </form>
 
 
     {% if cls in ("1","2","3","4","5","6","7","8","9","10","11") %}
     <form onsubmit="jQuery.post('/uploadSecurityForm', jQuery('#securityForm').serialize(),clean('securityForm'));return false" method="post" id="securityForm">
         <!--社保需求-->
+        <div style="text-align: left;margin: 10px 20px">
+            <button type="button" class="btn btn-info" onclick="addSecurityDate()">新增社保</button>
+        </div>
         <table class="table table-striped table-bordered table-hover">
             <tr>
                 <th colspan="4">社保需求</th>
@@ -1650,20 +1696,24 @@
                 </td>
             </tr>
             {% endif %}
-            <tr><td colspan="4">
-                <input type="submit" class="btn btn-danger submitbtn" style="float: right;margin: 0px 10px 15px 0;" disabled="disabled" value="提交">
-                <a class="btn btn-info" style="float: right;margin: 0px 10px 15px 0;" href="javascript:;" onclick="checkout('securityForm')">检查</a>
-            </td></tr>
+{#            <tr><td colspan="4">#}
+{#                <input type="submit" class="btn btn-danger submitbtn" style="float: right;margin: 0px 10px 15px 0;" disabled="disabled" value="提交">#}
+{#                <a class="btn btn-info" style="float: right;margin: 0px 10px 15px 0;" href="javascript:;" onclick="checkout('securityForm')">检查</a>#}
+{#            </td></tr>#}
         </table>
         <table class="table table-striped table-bordered table-hover" id="securityFormTable" hidden>
-            <tr><td colspan="5">社保需求</td></tr>
+            <tr><td colspan="6">社保需求</td></tr>
             <tr>
                 <td>合同编号</td>
                 <td>社保缴纳城市</td>
-                <td>不收取残保金城市</td>
+                <td>是否减免残保金</td>
                 <td>社保到款日</td>
                 <td>是否涉及异地参保</td>
+                <td>操作</td>
             </tr>
+            <tbody id="securityFormTableBody">
+
+            </tbody>
         </table>
     </form>
     {% endif %}
@@ -1671,6 +1721,9 @@
     {% if cls in ("10","11","12","13","14","15") %}
     <form onsubmit="jQuery.post('/uploadSalaryForm', jQuery('#salaryForm').serialize(),clean('salaryForm'));return false" method="post"  id="salaryForm">
         <!--薪税需求-->
+        <div style="text-align: left;margin: 10px 20px">
+            <button type="button" class="btn btn-info" onclick="addSalaryDate()">新增薪税</button>
+        </div>
         <table class="table table-striped table-bordered table-hover">
             <tr><th colspan="4">薪税需求</th></tr>
             <tr hidden><td colspan="4"><input type="radio" id="contractid2" value="" name="合同编号" checked></td></tr>
@@ -1789,6 +1842,18 @@
                 let wages = document.querySelector("#wages");
                 let wagesIpt = document.querySelectorAll(".wages");
                 for(let i = 0;i<wagesIpt.length;i++){
+
+                    let str = "";
+                    let wagesIptValue = document.querySelectorAll(".wages");
+                    for(let i = 0;i<wagesIptValue.length;i++){
+                        if(wagesIptValue[i].checked == true){
+                            str = str+wagesIptValue[i].value;
+                        }
+                    }
+                    wages.value = str;
+
+                }
+                for(let i = 0;i<wagesIpt.length;i++){
                     wagesIpt[i].onchange=function () {
                         let str = "";
                         let wagesIptValue = document.querySelectorAll(".wages");
@@ -1805,13 +1870,13 @@
                 <td>薪税需求备注(选填):</td>
                 <td colspan="3"><input type="text" style="width: 90%" size="255" name="薪税需求备注" maxlength="512"></td>
             </tr>
-            <tr><td colspan="4">
-                <input type="submit" class="btn btn-danger submitbtn" style="float: right;margin: 0px 10px 15px 0;" disabled="disabled" value="提交">
-                <a class="btn btn-info" style="float: right;margin: 0px 10px 15px 0;" href="javascript:;" onclick="checkout('salaryForm')">检查</a>
-            </td></tr>
+{#            <tr><td colspan="4">#}
+{#                <input type="submit" class="btn btn-danger submitbtn" style="float: right;margin: 0px 10px 15px 0;" disabled="disabled" value="提交">#}
+{#                <a class="btn btn-info" style="float: right;margin: 0px 10px 15px 0;" href="javascript:;" onclick="checkout('salaryForm')">检查</a>#}
+{#            </td></tr>#}
         </table>
         <table class="table table-striped table-bordered table-hover" id="salaryFormTable" hidden>
-            <tr><td colspan="6">薪税需求</td></tr>
+            <tr><td colspan="7">薪税需求</td></tr>
             <tr>
                 <td>合同编号</td>
                 <td>工资报税地</td>
@@ -1819,10 +1884,17 @@
                 <td>工资发放日</td>
                 <td>工资发放类型</td>
                 <td>薪税需求备注</td>
+                <td>操作</td>
             </tr>
+            <tbody id="salaryFormBody">
+
+            </tbody>
         </table>
     </form>
     {% endif %}
+    <div style="text-align: center;margin: 20px 0 ">
+        <button type="button" class="btn btn-primary" style="width:120px;height: 40px" id="submit" onclick="save()">保存</button>
+    </div>
 </body>
 <script>
     /*初始化城市下拉选择*/
@@ -1839,7 +1911,7 @@
     /*创建城市下拉*/
     function creatCity(id) {
         var _dom = document.getElementById(id);
-        console.log(id)
+        
         var _cityList = [
                 {
                     "id": "1",
@@ -4925,11 +4997,9 @@
         test(findNodes("wordNotEmpty",form),isWordNotEmpty);
         let prevent = form.querySelectorAll(".prevent");
         if(prevent.length==0){
-            let submitbtn = form.querySelector(".submitbtn");
-            submitbtn.classList.add("btn-success");
-            submitbtn.classList.remove("btn-danger");
-            submitbtn.removeAttribute("disabled");
+            return true
         }
+        return false;
     }
     /* 成功提交后续动作 */
     function eliminate(formNodeName){
@@ -4940,7 +5010,7 @@
         }
     }
     function clean(formNodeName){
-        alert("提交成功");
+        // alert("提交成功");
         let form = document.getElementById(formNodeName);
         if (form != null) {
             let showTable = form.querySelector("#"+formNodeName+"Table");
@@ -4949,21 +5019,27 @@
             jQuery.each(t, function() {
               data[this.name] = this.value;
             });
+            data.operation = "operate";
             let tr = document.createElement("tr");
+
             for(var key in data){
                 var td = document.createElement("td");
-                td.innerText=data[key];
+                if(key == 'operation'){
+                    td.innerHTML = "<a class='edit' style='cursor:pointer;margin-right:5px'>编辑</a><a class='delete' style='cursor:pointer;margin-right:5px'>删除</a>"
+                }else{
+                     td.innerText=data[key];
+                }
                 tr.appendChild(td);
             }
             showTable.appendChild(tr);
             showTable.removeAttribute("hidden");
 
-            let radio = form.querySelectorAll("."+formNodeName+"Radio");
-            if(radio){
-                radio.forEach(function(ele){
-                    ele.style.display="none";
-                });
-            }
+            // let radio = form.querySelectorAll("."+formNodeName+"Radio");
+            // if(radio){
+            //     radio.forEach(function(ele){
+            //         ele.style.display="none";
+            //     });
+
 
             let inputs = form.querySelectorAll("input");
             inputs.forEach(function(ele){
@@ -4974,11 +5050,151 @@
                     ele.checked = false;
                 }
             });
-            let submitbtn = form.querySelector(".submitbtn");
-            submitbtn.setAttribute("disabled","disabled");
-            submitbtn.classList.remove("btn-success");
-            submitbtn.classList.add("btn-danger");
+            // let submitbtn = form.querySelector(".submitbtn");
+            // submitbtn.setAttribute("disabled","disabled");
+            // submitbtn.classList.remove("btn-success");
+            // submitbtn.classList.add("btn-danger");
         }
     }
+
+    /*保存按钮操作*/
+    function save() {
+        
+        if(!checkout('mainForm')){
+            alert("请完善基本信息！！！");
+            return false
+        }
+        if(document.getElementById('securityForm') && !checkout('securityForm')){
+            alert("请完善社保需求信息！！！");
+            return false
+        }
+        if(document.getElementById('salaryForm') && !checkout('salaryForm')){
+             alert("请完善薪税需求信息！！！");
+            return false
+        }
+        if(document.getElementById('ratePrice')){
+
+            document.getElementById('ratePrice').value = document.getElementById('ratePrice1').value + ';' + document.getElementById('ratePrice2').value;
+            document.getElementById('ratePriceNormal').value = document.getElementById('ratePrice').value;
+        }
+        $.post('/uploadMainForm',$('#mainForm').serialize(),function (data,textStatus,jqXHR) {
+            if(securityList.length !=0){
+                 if(document.getElementById('securityForm')){
+                $.post('/uploadSecurityForm',JSON.stringify(securityList),function () {
+                  
+                })
+            }
+            }
+            if(salaryList.length !=0){
+              if(document.getElementById('salaryForm')){
+                $.post('/uploadSalaryForm',JSON.stringify(salaryList),function () {
+                    
+                })
+            }
+            }
+            window.location = '/inputcheck'
+        })
+
+    }
+
+    var securityList = [];
+    /*新增社保需求操作*/
+    function addSecurityDate() {
+        if(document.getElementById('securityForm') && !checkout('securityForm')){
+            alert("请完善社保需求信息！！！");
+            return false
+        }
+        let data = {};
+        let t = $("#securityForm").serializeArray();
+        $.each(t, function() {
+          data[this.name] = this.value;
+        });
+        securityList.push(data);
+        var _html ='';
+        for(var i=0;i<securityList.length;i++){
+             securityList[i].index = i;
+          
+            _html += `
+                      <tr id="${ 'securityTr' + i  }">
+                         <td>${securityList[i]["合同编号"]}</td>
+                         <td>${securityList[i]["社保缴纳城市"]}</td>
+                         <td>${securityList[i]["是否减免残保金"]}</td>
+                         <td>${securityList[i]["社保到款日"]}</td>
+                         <td>${securityList[i]["是否涉及异地参保"]}</td>
+                         <td>
+
+                            <button class="delete" type="button" onclick="deleteSecurity(${ i })">删除</button>
+                         </td>
+                      </tr>
+                      `
+        }
+        $('#securityFormTableBody').html(_html);
+        $('#securityFormTable').removeAttr("hidden");
+    }
+    /*删除社保需求列表*/
+    function deleteSecurity(index) {
+        var _dom = 'securityTr' + index;
+        if(document.getElementById(_dom)){
+            $("#"+_dom).remove();
+            for(var j=0;j<securityList.length;j++){
+                if(j == index){
+                    securityList.splice(j);
+                    break
+                }
+            }
+        }
+
+    }
+
+    var salaryList = [];
+    /*新增薪税需求操作*/
+    function addSalaryDate() {
+        if(document.getElementById('salaryForm') && !checkout('salaryForm')){
+            alert("请完善薪税需求信息！！！");
+            return false
+        }
+        let data = {};
+        let t = $("#salaryForm").serializeArray();
+        $.each(t, function() {
+          data[this.name] = this.value;
+        });
+        salaryList.push(data);
+        var _html ='';
+        for(var i=0;i<salaryList.length;i++){
+             salaryList[i].index = i;
+         
+            _html += `
+                      <tr id="${ 'salaryTr' + i  }">
+                         <td>${salaryList[i]["合同编号"]}</td>
+                         <td>${salaryList[i]["工资报税地"]}</td>
+                         <td>${salaryList[i]["工资到款日"]}</td>
+                         <td>${salaryList[i]["工资发放日"]}</td>
+                         <td>${salaryList[i]["工资发放类型"]}</td>
+                          <td>${salaryList[i]["薪税需求备注"]}</td>
+                         <td>
+
+                            <button class="delete" type="button" onclick="deleteSalary(${ i })">删除</button>
+                         </td>
+                      </tr>
+                      `
+        }
+        $('#salaryFormBody').html(_html);
+        $('#salaryFormTable').removeAttr("hidden");
+    }
+    /*删除社保需求列表*/
+    function deleteSalary(index) {
+        var _dom = 'salaryTr' + index;
+        if(document.getElementById(_dom)){
+            $("#"+_dom).remove();
+            for(var j=0;j<salaryList.length;j++){
+                if(j == index){
+                    salaryList.splice(j);
+                    break
+                }
+            }
+        }
+
+    }
+
 </script>
 </html>

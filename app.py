@@ -1,6 +1,7 @@
 # encoding: utf-8
 from flask import Flask,render_template,request,redirect,make_response,session
 import pymysql
+import json
 from code import code
 from config import secret_key
 from config import mysqlhost,user,password,dbname,mysqlport
@@ -149,48 +150,52 @@ def uploadMainForm():
 
 @app.route('/uploadSecurityForm',methods=["POST"])
 def uploadSecurityForm():
-    data = dict(request.form)
-    delkeyList = []
-    for key, value in data.items():
-        if value == "":
-            delkeyList.append(key)
-    if len(delkeyList) != 0:
-        for item in delkeyList:
-            del data[item]
-    if len(data) != 0:
-        data.setdefault("create_userid", session.get("userid"))
-        keyList = list(data.keys())
-        keyList = ",".join(keyList)
-        valueList = tuple(data.values())
-        db = connect()
-        cur = db.cursor()
-        cur.execute("insert into securityform (" + keyList + ") values (" + ','.join(['%s' for i in range(len(data))]) + ")",valueList)
-        db.commit()
-        db.close()
-        cur.close()
+    data = json.loads(request.get_data())
+    for thisdata in data:
+        del thisdata["index"]
+        delkeyList = []
+        for key, value in thisdata.items():
+            if value == "":
+                delkeyList.append(key)
+        if len(delkeyList) != 0:
+            for item in delkeyList:
+                del thisdata[item]
+        if len(thisdata) != 0:
+            thisdata.setdefault("create_userid", session.get("userid"))
+            keyList = list(thisdata.keys())
+            keyList = ",".join(keyList)
+            valueList = tuple(thisdata.values())
+            db = connect()
+            cur = db.cursor()
+            cur.execute("insert into securityform (" + keyList + ") values (" + ','.join(['%s' for i in range(len(thisdata))]) + ")",valueList)
+            db.commit()
+    db.close()
+    cur.close()
     return "success"
 
 @app.route('/uploadSalaryForm',methods=["POST"])
 def uploadSalaryForm():
-    data = dict(request.form)
-    delkeyList = []
-    for key, value in data.items():
-        if value == "":
-            delkeyList.append(key)
-    if len(delkeyList) != 0:
-        for item in delkeyList:
-            del data[item]
-    if len(data) != 0:
-        data.setdefault("create_userid", session.get("userid"))
-        keyList = list(data.keys())
-        keyList = ",".join(keyList)
-        valueList = tuple(data.values())
-        db = connect()
-        cur = db.cursor()
-        cur.execute("insert into salaryform (" + keyList + ") values (" + ','.join(['%s' for i in range(len(data))]) + ")",valueList)
-        db.commit()
-        db.close()
-        cur.close()
+    data = json.loads(request.get_data())
+    for thisdata in data:
+        del thisdata["index"]
+        delkeyList = []
+        for key, value in thisdata.items():
+            if value == "":
+                delkeyList.append(key)
+        if len(delkeyList) != 0:
+            for item in delkeyList:
+                del thisdata[item]
+        if len(thisdata) != 0:
+            thisdata.setdefault("create_userid", session.get("userid"))
+            keyList = list(thisdata.keys())
+            keyList = ",".join(keyList)
+            valueList = tuple(thisdata.values())
+            db = connect()
+            cur = db.cursor()
+            cur.execute("insert into salaryform (" + keyList + ") values (" + ','.join(['%s' for i in range(len(thisdata))]) + ")",valueList)
+            db.commit()
+    db.close()
+    cur.close()
     return "success"
 
 # 查看已录入合同入口
@@ -355,6 +360,74 @@ def updateMainForm(cid):
     cur.close()
     return "success"
 
+@app.route('/updataSecurityForm/<cid>',methods=["POST"])
+def updataSecurityForm(cid):
+    data = json.loads(request.get_data())
+    create_userid = session.get("userid")
+    db = connect()
+    cur = db.cursor()
+    cur.execute("update LOW_PRIORITY ignore securityform set state='0' where `合同编号` = %s and create_userid = %s and state = 1",(cid, create_userid))
+    db.commit()
+    
+    for thisdata in data:
+        del thisdata["index"]
+        try:
+            del thisdata["id"]
+        except:
+            pass   
+        delkeyList = []
+        for key, value in thisdata.items():
+            if value == "":
+                delkeyList.append(key)
+        if len(delkeyList) != 0:
+            for item in delkeyList:
+                del thisdata[item]
+        if len(thisdata) != 0:
+            thisdata.setdefault("create_userid", session.get("userid"))
+            keyList = list(thisdata.keys())
+            keyList = ",".join(keyList)
+            valueList = tuple(thisdata.values())
+            cur.execute("insert into securityform (" + keyList + ") values (" + ','.join(['%s' for i in range(len(thisdata))]) + ")",valueList)
+            db.commit()
+    db.close()
+    cur.close()
+    return "success"
+
+@app.route('/updataSalaryForm/<cid>',methods=["POST"])
+def updataSalaryForm(cid):
+    data = json.loads(request.get_data())
+    create_userid = session.get("userid")
+    db = connect()
+    cur = db.cursor()
+    cur.execute("update LOW_PRIORITY ignore salaryform set state='0' where `合同编号` = %s and create_userid = %s and state = 1",(cid, create_userid))
+    db.commit()
+
+    for thisdata in data:
+        del thisdata["index"]
+        try:
+            del thisdata["id"]
+        except:
+            pass    
+        delkeyList = []
+        for key, value in thisdata.items():
+            if value == "":
+                delkeyList.append(key)
+        if len(delkeyList) != 0:
+            for item in delkeyList:
+                del thisdata[item]
+        if len(thisdata) != 0:
+            thisdata.setdefault("create_userid", session.get("userid"))
+            keyList = list(thisdata.keys())
+            keyList = ",".join(keyList)
+            valueList = tuple(thisdata.values())
+            cur.execute("insert into salaryform (" + keyList + ") values (" + ','.join(['%s' for i in range(len(thisdata))]) + ")",valueList)
+            db.commit()
+    db.close()
+    cur.close()
+    return "success"
+
+
+# 检查合同号客户名称产品名称匹配
 @app.route('/checkcon',methods=["GET"])
 def checkcon():
     productList = {"8":"101","1":"102","4":"103","6":"104","15":"106","9":"107","11":"108","10":"110","14":"112","2":"113","5":"114","3":"115","7":"116","16":"117","17":"117","12":"118","13":"119"}
@@ -363,10 +436,8 @@ def checkcon():
     cls = request.args.get("cls")
     db = connect()
     cur = db.cursor()
-    print('select id from bus_contract where cont_code = %s and cust_cn = %s and combo_id = %s'%(conid,cus,productList[cls]))
     cur.execute('select id from bus_contract where cont_code = %s and cust_cn = %s and combo_id = %s',(conid,cus,productList[cls]))
     result = cur.fetchall()
-    print(result)
     db.close()
     cur.close()
     if result:
