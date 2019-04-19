@@ -42,15 +42,11 @@
                 <td><span style="color:red">*</span>运营经理</td>
                 <td><input type="text"class="wordNotEmpty" name="客服经理" maxlength="64"></td>
             </tr>
-{#            <tr>#}
-{#                <td>运营组长</td>#}
-{#                <td><input type="text"class="wordNotEmpty" name="运营组长" maxlength="64"></td>#}
-{#                <td colspan="2"></td>#}
-{#            </tr>#}
             <tr>
-                <td>账单出具日</td>
+                <td><span style="color:red">*</span>账单出具日</td>
                 <td>
-                    <select name="账单出具日">
+                    <select name="账单出具日" class="numberNotEmpty">
+                        <option value=" "></option>
                         <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
                         <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
                         <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
@@ -61,9 +57,10 @@
                         <option value="29">29</option><option value="30">30</option><option value="31">31</option>
                     </select>
                 </td>
-                <td>到账约定</td>
+                <td><span style="color:red">*</span>到账约定</td>
                 <td>
-                    <select name="到账约定">
+                    <select name="到账约定" class="wordNotEmpty">
+                            <option value=" "></option>
                         <option value="先款后票">先款后票</option><option value="先票后款">先票后款</option>
                     </select>
                 </td>
@@ -1584,9 +1581,7 @@
     {% if cls in ("1","2","3","4","5","6","7","8","9","10","11") %}
     <form onsubmit="jQuery.post('/uploadSecurityForm', jQuery('#securityForm').serialize(),clean('securityForm'));return false" method="post" id="securityForm">
         <!--社保需求-->
-        <div style="text-align: left;margin: 10px 20px">
-            <button type="button" class="btn btn-info" onclick="addSecurityDate()">新增社保</button>
-        </div>
+        
         <table class="table table-striped table-bordered table-hover">
             <tr>
                 <th colspan="4">社保需求</th>
@@ -1696,11 +1691,10 @@
                 </td>
             </tr>
             {% endif %}
-{#            <tr><td colspan="4">#}
-{#                <input type="submit" class="btn btn-danger submitbtn" style="float: right;margin: 0px 10px 15px 0;" disabled="disabled" value="提交">#}
-{#                <a class="btn btn-info" style="float: right;margin: 0px 10px 15px 0;" href="javascript:;" onclick="checkout('securityForm')">检查</a>#}
-{#            </td></tr>#}
         </table>
+        <div style="text-align: left;margin: 10px 20px">
+                <button type="button" class="btn btn-info" onclick="addSecurityDate()">保存该社保明细</button>
+            </div>
         <table class="table table-striped table-bordered table-hover" id="securityFormTable" hidden>
             <tr><td colspan="6">社保需求</td></tr>
             <tr>
@@ -1721,9 +1715,7 @@
     {% if cls in ("10","11","12","13","14","15") %}
     <form onsubmit="jQuery.post('/uploadSalaryForm', jQuery('#salaryForm').serialize(),clean('salaryForm'));return false" method="post"  id="salaryForm">
         <!--薪税需求-->
-        <div style="text-align: left;margin: 10px 20px">
-            <button type="button" class="btn btn-info" onclick="addSalaryDate()">新增薪税</button>
-        </div>
+        
         <table class="table table-striped table-bordered table-hover">
             <tr><th colspan="4">薪税需求</th></tr>
             <tr hidden><td colspan="4"><input type="radio" id="contractid2" value="" name="合同编号" checked></td></tr>
@@ -1870,11 +1862,10 @@
                 <td>薪税需求备注(选填):</td>
                 <td colspan="3"><input type="text" style="width: 90%" size="255" name="薪税需求备注" maxlength="512"></td>
             </tr>
-{#            <tr><td colspan="4">#}
-{#                <input type="submit" class="btn btn-danger submitbtn" style="float: right;margin: 0px 10px 15px 0;" disabled="disabled" value="提交">#}
-{#                <a class="btn btn-info" style="float: right;margin: 0px 10px 15px 0;" href="javascript:;" onclick="checkout('salaryForm')">检查</a>#}
-{#            </td></tr>#}
         </table>
+        <div style="text-align: left;margin: 10px 20px">
+                <button type="button" class="btn btn-info" onclick="addSalaryDate()">保存该薪税明细</button>
+            </div>
         <table class="table table-striped table-bordered table-hover" id="salaryFormTable" hidden>
             <tr><td colspan="7">薪税需求</td></tr>
             <tr>
@@ -1893,7 +1884,7 @@
     </form>
     {% endif %}
     <div style="text-align: center;margin: 20px 0 ">
-        <button type="button" class="btn btn-primary" style="width:120px;height: 40px" id="submit" onclick="save()">保存</button>
+        <button type="button" class="btn btn-primary" style="width:120px;height: 40px" id="submit" onclick="save()">提交</button>
     </div>
 </body>
 <script>
