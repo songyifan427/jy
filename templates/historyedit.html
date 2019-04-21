@@ -302,11 +302,11 @@
                     <td>
                     <div style="display: block;" id="commonPrice">
 
-                            <input type="text"  name="风险金报价" id="ratePriceNormal" maxlength="64">
+                            <input type="text" class="number" name="风险金报价1" id="ratePriceNormal" value="{{ mainform['风险金报价1'] }}" maxlength="64">
                         </div>
                         <div style="display: none;" id="ratePrice">
-                            全额收入<input type="text" class="number" id="ratePrice1" name="风险金报价" maxlength="64" style="width: 10%">%&nbsp;
-                        &nbsp;下限&nbsp;<input type="text" class="number" id="ratePrice2" name="风险金报价" maxlength="64" style="width: 20%">&nbsp人/元/月
+                            全额收入<input type="text" class="number" id="ratePrice1" name="风险金报价2比例" maxlength="64" value="{{ mainform['风险金报价2比例'] }}" style="width: 10%">%&nbsp;
+                        &nbsp;下限&nbsp;<input type="text" class="number" id="ratePrice2" name="风险金报价2下限" maxlength="64" value="{{ mainform['风险金报价2下限'] }}" style="width: 20%">&nbsp人/元/月
                             </div>
                     </td>
                     <td colspan="2"></td>
@@ -1591,14 +1591,12 @@
                     <select id="city_selector" style="width: 80px;"></select>
                     <select id="district_selector" style="width: 80px;"></select>
                     <input type="text" id="shebaoCity" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255" style="display: none;">
-                    <!-- <input type="text" class="wordNotEmpty" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255"> -->
                 </td>
                 <td>
                     <select name="是否减免残保金" >
                             <option value="否">否</option>
                             <option value="是">是</option>
                     </select>
-                    <!-- <input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="减免残保金城市" maxlength="255"> -->
                 </td>
                 <td>
                     <select name="社保到款日">
@@ -1637,14 +1635,12 @@
                     <select id="city_selector" style="width: 80px;"></select>
                     <select id="district_selector" style="width: 80px;"></select>
                     <input type="text" id="shebaoCity" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255" style="display: none;">
-                    <!-- <input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255"> -->
                 </td>
                 <td>
                      <select name="是否减免残保金" >
                             <option value="否">否</option>
                             <option value="是">是</option>
-                    </select>
-                    <!-- <input type="text" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="减免残保金城市" maxlength="255"> -->
+                    </select>                  
                 </td>
                 <td>
                     <select name="社保到款日">
@@ -1717,8 +1713,7 @@
                     <select id="province_selector_salary" style="width: 80px;"></select>
                     <select id="city_selector_salary" style="width: 80px;"></select>
                     <select id="district_selector_salary" style="width: 80px;"></select>
-                    <input type="text" id="salaryCity"  placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="工资报税地"  maxlength="255" style="display: none;">
-                    <!-- <input type="text" class="word" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="工资报税地"  maxlength="255"> -->
+                    <input type="text" id="salaryCity"  placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="工资报税地"  maxlength="255" style="display: none;">              
                 </td>
                 <td>工资到款日(选填)</td>
                 <td>
@@ -2116,6 +2111,12 @@
          if(minDate["风险金收费方式"]){
             var regList = ['一次性收费（元/项目）','按月收费（人/元/月）','按比例收费'];
             getCheckDate(minDate["风险金收费方式"],regList,'input[name=\'风险金收费方式\']');
+            if(minDate["风险金收费方式"] == "按比例收费"){
+              var _dom1 = document.getElementById('commonPrice');
+              var _dom2 = document.getElementById('ratePrice');
+              _dom1.style.display = "none";
+              _dom2.style.display = "block";
+            }
         }
         if(minDate["税费承担方式"]){
             setOptionsStatus('taxiType',minDate["税费承担方式"]);
@@ -2374,11 +2375,19 @@
             alert("请保存薪税需求信息！！！");
             return false
         }
-        if(document.getElementById('ratePrice')){
-
-            document.getElementById('ratePrice').value = document.getElementById('ratePrice1').value + ';' + document.getElementById('ratePrice2').value;
-            document.getElementById('ratePriceNormal').value = document.getElementById('ratePrice').value;
+        var _dom = $('input[name=\'风险金收费方式\']:checked');//checkboxName
+        if(_dom && $(_dom).val() == "按比例收费"){
+          var _dom1 = document.getElementById('ratePriceNormal');
+              _dom1.value = ' ';
+            
+        }else if( (_dom && $(_dom).val() == "一次性收费（元/项目）") || (_dom && $(_dom).val() == "按月收费（人/元/月）") ){
+          var _dom2 = document.getElementById('ratePrice1');
+          var _dom3 = document.getElementById('ratePrice2');
+              _dom3.value = ' ';
+              _dom2.value = ' ';
         }
+        
+
         var _url = '/updateMainForm/' + _cid.trim();
        
         $.post(_url,$('#mainForm').serialize(),function (data,textStatus,jqXHR) {
@@ -6812,7 +6821,6 @@
     district_selector.html('<option value="">请选择</option>');
     province_selector.change(function () {
         provinceCode =province_selector.find('option:selected').val();
-        console.log(provinceCode);
         htm = '<option value="">请选择</option>';
         for(var key in DISTRICTS[provinceCode]) {
             htm += '<option value="'+key+'">'+DISTRICTS[provinceCode][key]+'</option>';
@@ -6822,7 +6830,6 @@
     });
     city_selector.change(function () {
         cityCode =city_selector.find('option:selected').val();
-        console.log(cityCode);
         htm = '<option value="">请选择</option>';
         for(var key in DISTRICTS[cityCode]) {
             htm += '<option value="'+key+'">'+DISTRICTS[cityCode][key]+'</option>';
@@ -6831,7 +6838,6 @@
     });
     district_selector.change(function () {
         districtCode =district_selector.find('option:selected').val();
-        console.log(districtCode);
     });
     province_selector_salary.html(htmSalary);
     city_selector_salary.html('<option value="">请选择</option>');

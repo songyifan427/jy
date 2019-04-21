@@ -319,17 +319,15 @@
                 <td><span style="color:red">*</span>风险金报价(元)</td>
                 <td>
                     <div style="display: block;" id="commonPrice">
-{#                        <input type="text" class="numberNotEmpty" name="风险金报价" id="ratePriceNormal" maxlength="64">#}
-                        <input type="text"  name="风险金报价" id="ratePriceNormal" maxlength="64">
+                        <input type="text" class="number" name="风险金报价1" id="ratePriceNormal" maxlength="64">
                     </div>
                      <div style="display: none;" id="ratePrice">
-                       全额收入<input type="text" class="number" id="ratePrice1" name="风险金报价" maxlength="64" style="width: 10%">%&nbsp;
-                    &nbsp;下限&nbsp;<input type="text" class="number" id="ratePrice2" name="风险金报价" maxlength="64" style="width: 20%">&nbsp人/元/月
+                       全额收入<input type="text" class="number" id="ratePrice1" name="风险金报价2比例" maxlength="64" style="width: 10%">%&nbsp;
+                    &nbsp;下限&nbsp;<input type="text" class="number" id="ratePrice2" name="风险金报价2下限" maxlength="64" style="width: 20%">&nbsp人/元/月
                     </div>
                 </td>
                 <td colspan="2"></td>
             </tr>
-            <tr hidden><td colspan="2"><input type="text" name="风险金报价" value="" id="ratePrice"></td></tr>
         </table>
             <script>
                 $('input[type=radio][name=风险金收费方式]').change(function() {
@@ -1951,13 +1949,6 @@
             showTable.appendChild(tr);
             showTable.removeAttribute("hidden");
 
-            // let radio = form.querySelectorAll("."+formNodeName+"Radio");
-            // if(radio){
-            //     radio.forEach(function(ele){
-            //         ele.style.display="none";
-            //     });
-
-
             let inputs = form.querySelectorAll("input");
             inputs.forEach(function(ele){
                 if(ele.type=="text" || ele.type=="date"){
@@ -1967,10 +1958,6 @@
                     ele.checked = false;
                 }
             });
-            // let submitbtn = form.querySelector(".submitbtn");
-            // submitbtn.setAttribute("disabled","disabled");
-            // submitbtn.classList.remove("btn-success");
-            // submitbtn.classList.add("btn-danger");
         }
     }
     var securityList = [];
@@ -2000,11 +1987,11 @@
             alert("请保存薪税需求信息！！！");
             return false
         }
-        if(document.getElementById('ratePrice')){
+        // if(document.getElementById('ratePrice')){
 
-            document.getElementById('ratePrice').value = document.getElementById('ratePrice1').value + ';' + document.getElementById('ratePrice2').value;
-            document.getElementById('ratePriceNormal').value = document.getElementById('ratePrice').value;
-        }
+        //     document.getElementById('ratePrice').value = document.getElementById('ratePrice1').value + ';' + document.getElementById('ratePrice2').value;
+        //     document.getElementById('ratePriceNormal').value = document.getElementById('ratePrice').value;
+        // }
         $.post('/uploadMainForm',$('#mainForm').serialize(),function (data,textStatus,jqXHR) {
             if(securityList.length !=0){
                  if(document.getElementById('securityForm')){
@@ -2050,7 +2037,6 @@
 
 
         let t = $("#securityForm").serializeArray();
-        console.log(t,'t');
         $.each(t, function() {
           data[this.name] = this.value;
         });
@@ -6440,7 +6426,6 @@
     district_selector.html('<option value="">请选择</option>');
     province_selector.change(function () {
         provinceCode =province_selector.find('option:selected').val();
-        console.log(provinceCode);
         htm = '<option value="">请选择</option>';
         for(var key in DISTRICTS[provinceCode]) {
             htm += '<option value="'+key+'">'+DISTRICTS[provinceCode][key]+'</option>';
@@ -6450,7 +6435,6 @@
     });
     city_selector.change(function () {
         cityCode =city_selector.find('option:selected').val();
-        console.log(cityCode);
         htm = '<option value="">请选择</option>';
         for(var key in DISTRICTS[cityCode]) {
             htm += '<option value="'+key+'">'+DISTRICTS[cityCode][key]+'</option>';
@@ -6459,7 +6443,6 @@
     });
     district_selector.change(function () {
         districtCode =district_selector.find('option:selected').val();
-        console.log(districtCode);
     });
     province_selector_salary.html(htmSalary);
     city_selector_salary.html('<option value="">请选择</option>');
