@@ -382,7 +382,7 @@
             <tr>
                 <td>税率(选填)&nbsp(%)</td>
                 <td>
-                    <input  type="text" class="numberNotEmpty"  name="税率"  maxlength="64">
+                    <input  type="text" class="number"  name="税率"  maxlength="64">
                     <div style="color:red">tips:填写客户需要承担税率，例如6.84%，非发票票面税率</div>
                 </td>
                 {% if cls =="13" %}
@@ -1839,6 +1839,7 @@
     <div style="text-align: center;margin: 20px 0 ">
         <button type="button" class="btn btn-primary" style="width:120px;height: 40px" id="submit" onclick="save()">提交</button>
     </div>
+    <div id="clsValue" style="display: none;">{{ cls }}</div>
 </body>
 <script>
 
@@ -1965,7 +1966,8 @@
 
     /*保存按钮操作*/
     function save() {
-        
+        var _cls = document.getElementById("clsValue").innerText.trim();
+
         if(!checkout('mainForm')){
             alert("请完善基本信息！！！");
             return false
@@ -1983,7 +1985,7 @@
             alert("请保存社保需求信息！！！");
             return false
         }
-        if( document.getElementById('salaryForm') && salaryList.length ==0 ){
+        if( document.getElementById('salaryForm') && salaryList.length ==0  && (_cls == 11 || _cls == 12 || _cls == 13 || _cls == 15)){
             alert("请保存薪税需求信息！！！");
             return false
         }
@@ -2000,13 +2002,13 @@
                 })
             }
             }
-            if(salaryList.length !=0){
+
               if(document.getElementById('salaryForm')){
                 $.post('/uploadSalaryForm',JSON.stringify(salaryList),function () {
-                    
+
                 })
-            }
-            }
+              }
+
             window.location = '/inputcheck'
         })
 
@@ -2069,7 +2071,7 @@
             $("#"+_dom).remove();
             for(var j=0;j<securityList.length;j++){
                 if(j == index){
-                    securityList.splice(j);
+                    securityList.splice(j,1);
                     break
                 }
             }
@@ -2133,7 +2135,7 @@
             $("#"+_dom).remove();
             for(var j=0;j<salaryList.length;j++){
                 if(j == index){
-                    salaryList.splice(j);
+                    salaryList.splice(j,1);
                     break
                 }
             }

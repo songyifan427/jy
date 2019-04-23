@@ -26,7 +26,7 @@
         <tr><td colspan="4">社保需求</td></tr>
         <tr>
             <td>社保缴纳城市</td>
-            <td>减免残保金城市</td>
+            <td>是否减免残保金</td>
             <td>社保到款日</td>
             <td>是否涉及异地参保</td>
             <td>操作</td>
@@ -34,10 +34,10 @@
         {% for item in securityform %}
         <tr>
             <td>{{ item["社保缴纳城市"] }}</td>
-            <td>{{ item["减免残保金城市"] }}</td>
+            <td>{{ item["是否减免残保金"] }}</td>
             <td>{{ item["社保到款日"] }}</td>
             <td>{{ item["是否涉及异地参保"] }}</td>
-            <td><a href="../delChildForm/securityform/{{ item["id"] }}">删除</a></td>
+            <td><a href="../delChildForm/securityform/{{ item['id'] }}">删除</a></td>
         </tr>
         {% endfor %}
     </table>

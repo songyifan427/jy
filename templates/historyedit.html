@@ -364,7 +364,7 @@
             </tr>
             <tr>
                 <td>税率(选填)&nbsp(%)</td>
-                <td><input  type="text" class="numberNotEmpty" placeholder="填写百分比数值，保留两位小数,例如:6.84" name="税率" value="{{ mainform['税率'] }}" maxlength="64"></td>
+                <td><input  type="text" class="number" placeholder="填写百分比数值，保留两位小数,例如:6.84" name="税率" value="{{ mainform['税率'] }}" maxlength="64"></td>
                 {% if cls =="13" %}
                 <td>灵活用工个人税费承担方式</td>
                 <td>
@@ -1538,10 +1538,12 @@
                                 str = str+setmealIptValue[i].value;
                                 }
                                 if(setmealIptValue[i].type=="text"){
-                                    str = str+setmealIptValue[i].value+";";
+                                    str = str + setmealIptValue[i].value+";";
                                 }
+
                             }
                         }
+
                         setmeal.value = str;
                     }
                 }
@@ -1553,7 +1555,7 @@
     </form>
 
 
-    {% if cls in ("1","2","3","4","5","6","7","8","9","10","11") %}
+    {% if cls in ("1","2","3","4","5","6","7","8","9","10","11","12") %}
     <form onsubmit="jQuery.post('/uploadSecurityForm', jQuery('#securityForm').serialize(),clean('securityForm'));return false" method="post" id="securityForm">
         <!--社保需求-->
         
@@ -1575,7 +1577,7 @@
                     }
                 }
             </script>
-            {% if cls in ("1","2","3","4","5","6","7","8","9","10") %}
+            
             <tr>
                 <th colspan="4">社保缴纳明细</th>
             </tr>
@@ -1619,51 +1621,8 @@
                     </label>
                 </td>
             </tr>
-            {% elif cls in ("11","12") %}
-            <tr>
-                <th colspan="4">社保缴纳明细(选填)</th>
-            </tr>
-            <tr>
-                <th>社保缴纳城市(选填)</th>
-                <th>是否减免残保金(选填)</th>
-                <th>社保到款日(选填)</th>
-                <th>是否涉及异地参保(选填)</th>
-            </tr>
-            <tr>
-                <td>
-                    <select id="province_selector" style="width: 80px;"></select>
-                    <select id="city_selector" style="width: 80px;"></select>
-                    <select id="district_selector" style="width: 80px;"></select>
-                    <input type="text" id="shebaoCity" placeholder="多个城市请一并填入，用分号“；”分开；例如:北京；杭州；上海" name="社保缴纳城市" maxlength="255" style="display: none;">
-                </td>
-                <td>
-                     <select name="是否减免残保金" >
-                            <option value="否">否</option>
-                            <option value="是">是</option>
-                    </select>                  
-                </td>
-                <td>
-                    <select name="社保到款日">
-                        <option value=""> </option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                        <option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option>
-                        <option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option>
-                        <option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option>
-                        <option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option>
-                        <option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option>
-                        <option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option>
-                        <option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option>
-                    </select>
-                </td>
-                <td>
-                    <label class="radio inline">
-                        <input type="radio" value="是" name="是否涉及异地参保">是
-                    </label>
-                    <label class="radio inline">
-                        <input type="radio" value="否" name="是否涉及异地参保">否
-                    </label>
-                </td>
-            </tr>
-            {% endif %}
+
+            
 
         </table>
         <div style="text-align: left;margin: 10px 20px">
@@ -1674,7 +1633,7 @@
             <tr>
                 <td>合同编号</td>
                 <td>社保缴纳城市</td>
-                <td>不收取残保金城市</td>
+                <td>是否减免残保金</td>
                 <td>社保到款日</td>
                 <td>是否涉及异地参保</td>
                 <td>操作</td>
@@ -2021,6 +1980,8 @@
              setOptionsStatus('businPayType',minDate["商保付款方式"]);
         }
         if(minDate["体检信息"]){
+            var _dom = document.getElementById('setmeal');
+            _dom.value = minDate["体检信息"];
             var list = minDate["体检信息"].split(';');//切分数据
             var dataList = [];//构建数据对象
             for(var i=0;i<list.length;i++){
@@ -2143,10 +2104,10 @@
                 _html += `
                           <tr id="${ 'securityTr' + i  }">
                              <td>${securityList[i]["合同编号"]}</td>
-                             <td>${securityList[i]["社保缴纳城市"]}</td>
-                             <td>${securityList[i]["是否减免残保金"]}</td>
-                             <td>${securityList[i]["社保到款日"]}</td>
-                             <td>${securityList[i]["是否涉及异地参保"]}</td>
+                             <td>${securityList[i]["社保缴纳城市"] ? securityList[i]["社保缴纳城市"] : '' }</td>
+                             <td>${securityList[i]["是否减免残保金"] ? securityList[i]["是否减免残保金"] : '' }</td>
+                             <td>${securityList[i]["社保到款日"] ?securityList[i]["社保到款日"] : '' }</td>
+                             <td>${securityList[i]["是否涉及异地参保"] ? securityList[i]["是否涉及异地参保"] : ''}</td>
                              <td>
 
                                 <button class="delete" type="button" onclick="deleteSecurity(${ i })">删除</button>
@@ -2168,11 +2129,11 @@
                 _html += `
                           <tr id="${ 'salaryTr' + j  }">
                              <td>${salaryList[j]["合同编号"]}</td>
-                             <td>${salaryList[j]["工资报税地"]}</td>
-                             <td>${salaryList[j]["工资到款日"]}</td>
-                             <td>${salaryList[j]["工资发放日"]}</td>
-                             <td>${salaryList[j]["工资发放类型"]}</td>
-                             <td>${salaryList[j]["薪税需求备注"]}</td>
+                             <td>${ salaryList[j]["工资报税地"] ? salaryList[j]["工资报税地"] : ''}</td>
+                             <td>${ salaryList[j]["工资到款日"] ? salaryList[j]["工资到款日"] : ''}</td>
+                             <td>${ salaryList[j]["工资发放日"] ? salaryList[j]["工资发放日"] : '' }</td>
+                             <td>${ salaryList[j]["工资发放类型"] ? salaryList[j]["工资发放类型"] : ''  }</td>
+                             <td>${ salaryList[j]["薪税需求备注"] ?  salaryList[j]["薪税需求备注"] : '' }</td>
                              <td>
 
                                 <button class="delete" type="button" onclick="deleteSalary(${ j })">删除</button>
@@ -2180,6 +2141,7 @@
                           </tr>
                           `
             }
+
             $('#salaryFormBody').html(_html);
             $('#salaryFormTable').removeAttr("hidden");
             
@@ -2375,7 +2337,7 @@
             alert("请保存社保需求信息！！！");
             return false
         }
-        if( document.getElementById('salaryForm') && salaryList.length ==0 ){
+        if( document.getElementById('salaryForm') && salaryList.length ==0  && (_cid == 11 || _cid == 12 || _cid == 13 || _cid == 15)){
             alert("请保存薪税需求信息！！！");
             return false
         }
@@ -2400,7 +2362,31 @@
                 if(_submitData[k].name == 'fileId'){
                     _submitData.splice(k,1)
                 }
-                 if(_submitData[k].name == 'fileId2'){
+                if(_submitData[k].name == 'fileId2'){
+                    _submitData.splice(k,1)
+                }
+                if(_submitData[k].name == '员工福利体检套餐'){
+                    _submitData.splice(k,1)
+                }
+                if(_submitData[k].name == '员工福利体检优选套餐一'){
+                    _submitData.splice(k,1)
+                }
+                if(_submitData[k].name == '员工福利体检优选套餐二'){
+                    _submitData.splice(k,1)
+                }
+                if(_submitData[k].name == '员工福利体检优选套餐三'){
+                    _submitData.splice(k,1)
+                }
+                if(_submitData[k].name == '员工福利体检尊享套餐一'){
+                    _submitData.splice(k,1)
+                }
+                if(_submitData[k].name == '员工福利体检尊享套餐二'){
+                    _submitData.splice(k,1)
+                }
+                if(_submitData[k].name == '员工福利体检尊享套餐三'){
+                    _submitData.splice(k,1)
+                }
+                if(_submitData[k].name == '员工福利体检尊贵套餐'){
                     _submitData.splice(k,1)
                 }
 
@@ -2427,14 +2413,14 @@
                 })
             }
             }
-            if(salaryList.length !=0){
-                var _salaryUrl = '/updataSalaryForm/' + _cid.trim();
+
+            var _salaryUrl = '/updataSalaryForm/' + _cid.trim();
               if(document.getElementById('salaryForm')){
                 $.post(_salaryUrl,JSON.stringify(salaryList),function () {
-                   
+
                 })
             }
-            }
+
             window.location = '/inputcheck'
         })
 
@@ -2494,7 +2480,7 @@
             $("#"+_dom).remove();
             for(var j=0;j<securityList.length;j++){
                 if(j == index){
-                    securityList.splice(j);
+                    securityList.splice(j,1);
                     break
                 }
             }
@@ -2550,18 +2536,20 @@
         $('#salaryFormBody').html(_html);
         $('#salaryFormTable').removeAttr("hidden");
     }
-    /*删除社保需求列表*/
+    /*删除薪税需求列表*/
     function deleteSalary(index) {
         var _dom = 'salaryTr' + index;
         if(document.getElementById(_dom)){
             $("#"+_dom).remove();
-            for(var j=0;j<salaryList.length;j++){
+            for(var j=salaryList.length-1 ;j>=0;j--){
                 if(j == index){
-                    salaryList.splice(j);
+
+                    salaryList.splice(j,1);
                     break
                 }
             }
         }
+
     }
 
       /** 省市区三级代码查询 **/
