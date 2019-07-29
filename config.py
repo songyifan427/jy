@@ -4,7 +4,7 @@ ttfurl='.\Arvo-Regular.ttf'
 #session_key
 secret_key='123456'
 #mysql_host
-mysqlhost="172.17.0.4"
+mysqlhost=""
 # mysqlhost="localhost"
 #mysql_port
 mysqlport=3689
